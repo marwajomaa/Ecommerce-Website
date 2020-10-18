@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
     res.status(err.code || 500);
     console.log(err.code, "............");
   }
-  console.log(err.message);
+  console.log(err.message, 'error');
   res.json({ error: err.message || "AnUnKnown error has occurred" });
 });
 
