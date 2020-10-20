@@ -47,3 +47,53 @@ exports.userRegister = async (req, res, next) => {
     }
 }
 
+exports.loginUser = async (req, res, next) => {
+  const data = req.body;
+
+  const { email, password } = data;
+
+  let existingUser;
+  try {
+    existingUser = await Users.findOne({ email:email });
+  } catch (err) {
+    return next(new httpError("Could not login, please try again later", 500));
+  }
+
+  if (!existingUser) {
+    return next(new httpError("Invalid credentials could not log you in", 401));
+  }
+
+  let isValidPassword;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    return next(
+      new httpError(
+        "Could not log you in, please check your credentials and try again."
+      ),
+      500
+    );
+  }
+
+  if (!isValidPassword) {
+    return next(new httpError("Invalid credentials could not log you in", 401));
+  }
+
+  let token = true;
+  try {
+
+     token = await createAccessToken({ userId: existingUser.id, email: existingUser.email })
+
+  } catch (err) {
+    return next(new httpError("Could not login, please try again", 500));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Logged in",
+    user: existingUser,
+    token: token,
+  });
+};
+
+
