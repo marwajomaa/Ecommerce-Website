@@ -2,7 +2,7 @@ const Users = require('../models/userModel')
 const httpError = require('../middlewares/http-error')
 const bcrypt = require('bcrypt')
 
-const {createAccessToken} = require('../helpers/createToken')
+const {createAccessToken, createRefreshToken} = require('../helpers/createToken')
 
 exports.userRegister = async (req, res, next) => {
     try {
@@ -27,17 +27,19 @@ exports.userRegister = async (req, res, next) => {
       
       //create token 
       const token =  createAccessToken({id: newUser._id, email: newUser.email})
-
-      res.cookie('token', token, {
-          maxAge: 30,
-          httpOnly: true,
+      const refreshToken =  createRefreshToken({id: newUser._id, email: newUser.email})
+      
+      res.cookie('refreshToken', refreshToken, {
+        maxAge: 360000,
+        httpOnly: true,
+        path: '/user/refresh_token'
         });
 
-       res.json({ 
-           status: 'success',
-           msg: 'User has been successfully registered',
-           user: newUser,
-           token
+      res.json({ 
+        status: 'success',
+        msg: 'User has been successfully registered',
+        user: newUser,
+        token
        })
      
 
@@ -98,7 +100,7 @@ exports.loginUser = async (req, res, next) => {
 
 exports.logout = (req, res, next) => {
     try {
-      res.clearCookie('token')
+      res.clearCookie('token', path = '/user/refresh_token')
       
       return res.json({ 
           status: 'success',
@@ -109,4 +111,15 @@ exports.logout = (req, res, next) => {
     }
 }
 
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await (await Users.findById(req.user.id)).select('-password')
+
+    if (!user) return res.status(500).json({msg: err.message})
+
+   res.json(user)
+  } catch (err) {
+    return next(new httpError(err.message, 500))
+  }
+}
 
