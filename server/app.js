@@ -17,10 +17,10 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(cors())
 app.use(fileUpload({ useTemplate: true}))
 
-app.use(bodyParser.json());
 
 app.use(express.static(`${__dirname}/public`));
 
