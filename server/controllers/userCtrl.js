@@ -116,7 +116,7 @@ exports.logout = (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    const user = await (await Users.findById(req.user.id)).select('-password')
+    const user = await (Users.findById(req.user.userId)).select('-password')
 
     if (!user) return res.status(500).json({msg: err.message})
 
