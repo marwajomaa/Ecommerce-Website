@@ -6,8 +6,7 @@ exports.getCategories = async (req, res, next) => {
      const categories = await Category.find()
      res.json({categories})
     } catch (err) {
-        console.log(err.message);
-      return next(new httpError('Something went wrong, please try again'))
+      return next(new httpError('Something went wrong, please try again'), 500)
     }
 }
 
@@ -25,7 +24,7 @@ exports.createCategory = async (req, res, next) => {
     res.json({status: "success", msg: "Category created"})
 
   } catch (err) {
-    next(new httpError('something went wrong, please try again'))
+    next(new httpError('something went wrong, please try again'), 500)
   }
 }
 
@@ -39,7 +38,7 @@ exports.getCategory = async (req, res, next) => {
     res.json({status: "success", category})
 
   } catch (err) {
-    next(new httpError('something went wrong, please try again'))
+    next(new httpError('something went wrong, please try again'), 500)
   }
 }
 
@@ -54,7 +53,7 @@ exports.updateCategory = async (req, res, next) => {
     res.json({status: "success", msg: "Category has been updated successfully", category})
 
   } catch (err) {
-    next(new httpError('something went wrong, please try again'))
+    next(new httpError('something went wrong, please try again'), 500)
   }
 }
 
@@ -68,6 +67,6 @@ exports.deleteCategory = async (req, res, next) => {
     res.json({status: "success", msg: "Category hsa been successfully deleted"})
 
   } catch (err) {
-    next(new httpError('something went wrong, please try again'))
+    next(new httpError('something went wrong, please try again'), 500)
   }
 }
