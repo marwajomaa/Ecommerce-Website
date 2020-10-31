@@ -48,3 +48,19 @@ exports.updateProduct = async (req, res, next) => {
         return next(new httpError('Something went wrong, please try again'), 500)
     }
 }
+
+exports.deleteProduct = async (req, res, next) => {
+    const {id} = req.params;
+    try {
+     const product = await Products.findOne({_id: id})
+
+     if (!product) return next(new httpError('product not found'), 400)
+
+      await Products.findByIdAndDelete({_id: id})
+
+
+      res.status(200).json({status: "success", msg: "Product deleted successfully"})
+    } catch (err) {
+        return next(new httpError('Something went wrong, please try again'), 500)
+    }
+}
