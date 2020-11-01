@@ -24,7 +24,17 @@ class APIfeatures {
        return this;
     }
 
-    sorting(){}
+    sorting(){
+        if(this.queryString.sort){
+            const sortBy = this.queryString.sort.split(',').join(' ')
+            console.log(sortBy)
+            this.query = this.query.sort(sortBy)
+        }else{
+            this.query = this.query.sort('-createdAt')
+        }
+
+        return this;
+    }
 
      pagination(){}
 }
@@ -33,7 +43,7 @@ class APIfeatures {
 exports.getProducts = async (req, res, next) => {
     console.log(req.query)
     try {
-      const features = new APIfeatures(Products.find(), req.query).filtering()
+      const features = new APIfeatures(Products.find(), req.query).filtering().sorting()
       
       const products = await features.query
 
