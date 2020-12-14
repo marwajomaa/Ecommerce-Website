@@ -1,81 +1,23 @@
 import {
   AppBar,
   Toolbar,
-  Typography,
-  makeStyles,
   Button,
   IconButton,
   Drawer,
   Link,
   MenuItem,
-  Badge,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-const headersData = [
-  {
-    label: "Products",
-    href: "/products",
-  },
-  {
-    label: "Login",
-    href: "/login",
-  },
-];
-
-const headersDataLogin = [
-  {
-    label: "Products",
-    href: "/products",
-  },
-  {
-    label: "My Account",
-    href: "/account",
-  },
-  {
-    label: "Log Out",
-    href: "/logout",
-  },
-];
-
-const useStyles = makeStyles(() => ({
-  header: {
-    backgroundColor: "#fff",
-    paddingRight: "79px",
-    paddingLeft: "118px",
-    color: "red",
-    "@media (max-width: 900px)": {
-      paddingLeft: 0,
-    },
-  },
-  logo: {
-    fontFamily: "Work Sans, sans-serif",
-    fontWeight: 600,
-    color: "red",
-    textAlign: "left",
-  },
-  menuButton: {
-    fontFamily: "Open Sans, sans-serif",
-    fontWeight: 700,
-    size: "18px",
-    marginLeft: "38px",
-  },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    color: "red",
-  },
-  drawerContainer: {
-    padding: "20px 30px",
-    color: "red",
-  },
-}));
+import { headersData, headersDataLogin } from "../../constants/Links";
+import { Logo } from "../Logo";
+import { ShoppingCart } from "../ShoppingCart";
+import { useStyles } from "./Header.Style.js";
 
 export default function Header() {
-  const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
+  const { header, menuButton, toolbar, drawerContainer } = useStyles();
 
   const [state, setState] = useState({
     mobileView: false,
@@ -102,15 +44,7 @@ export default function Header() {
       <Toolbar className={toolbar}>
         {Logo}
         <div>{getMenuButtons()}</div>
-        {isLogin && (
-          <div style={{ marginLeft: "110px" }}>
-            <IconButton>
-              <Badge badgeContent={5} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </div>
-        )}
+        {isLogin && <ShoppingCart />}
       </Toolbar>
     );
   };
@@ -122,40 +56,34 @@ export default function Header() {
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
 
     return (
-      <Toolbar>
-        <IconButton
-          {...{
-            edge: "start",
-            color: "inherit",
-            "aria-label": "menu",
-            "aria-haspopup": "true",
-            onClick: handleDrawerOpen,
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
+      <>
+        <Toolbar>
+          <IconButton
+            {...{
+              edge: "start",
+              color: "inherit",
+              "aria-label": "menu",
+              "aria-haspopup": "true",
+              onClick: handleDrawerOpen,
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-        <Drawer
-          {...{
-            anchor: "left",
-            open: drawerOpen,
-            onClose: handleDrawerClose,
-          }}
-        >
-          <div className={drawerContainer}>{getDrawerChoices()}</div>
-        </Drawer>
+          <Drawer
+            {...{
+              anchor: "left",
+              open: drawerOpen,
+              onClose: handleDrawerClose,
+            }}
+          >
+            <div className={drawerContainer}>{getDrawerChoices()}</div>
+          </Drawer>
 
-        <div>{Logo}</div>
-        {isLogin && (
-          <div style={{ marginLeft: "110px" }}>
-            <IconButton>
-              <Badge badgeContent={5} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </div>
-        )}
-      </Toolbar>
+          {Logo}
+        </Toolbar>
+        {isLogin && <ShoppingCart />}
+      </>
     );
   };
 
@@ -192,12 +120,6 @@ export default function Header() {
           );
         });
   };
-
-  const Logo = (
-    <Typography variant="h6" component="h1" className={logo}>
-      Shopify
-    </Typography>
-  );
 
   const getMenuButtons = () => {
     return headersData.map(({ label, href }) => {
