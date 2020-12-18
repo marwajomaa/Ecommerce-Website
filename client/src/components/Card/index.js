@@ -24,15 +24,7 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard({ product }) {
-  const {
-    category,
-    checked,
-    content,
-    description,
-    price,
-    title,
-    sold,
-  } = product;
+  const { category, content, price, _id } = product;
   const classes = useStyles();
 
   return (
@@ -61,8 +53,17 @@ export default function MediaCard({ product }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button color="secondary" style={{ width: "50%" }} text="Buy" />
-        <Button style={{ width: "50%" }} text="View" />
+        <Button
+          color="secondary"
+          style={{ width: "50%" }}
+          text="Buy"
+          href="#"
+        />
+        <Button
+          style={{ width: "50%" }}
+          text="View"
+          href={`/product/detail/${_id}`}
+        />
       </CardActions>
     </Card>
   );
