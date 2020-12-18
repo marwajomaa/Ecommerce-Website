@@ -14,7 +14,9 @@ import Button from "../Button";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    minWidth: 300,
     margin: "0 auto",
+    padding: "10px",
   },
   media: {
     height: 200,
@@ -59,8 +61,8 @@ export default function MediaCard({ product }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button color="secondary" style={{ width: "60%" }} text="Buy" />
-        <Button style={{ width: "40%" }} text="View" />
+        <Button color="secondary" style={{ width: "50%" }} text="Buy" />
+        <Button style={{ width: "50%" }} text="View" />
       </CardActions>
     </Card>
   );
