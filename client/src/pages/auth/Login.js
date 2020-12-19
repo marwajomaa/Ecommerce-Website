@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Paper, Typography, makeStyles } from "@material-ui/core";
+import React from "react";
+import { Grid, makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
+
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { useForm } from "../../hooks/useForm";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -26,16 +28,37 @@ const initialValues = {
 };
 
 function Login() {
-  const [values, setValues] = useState(initialValues);
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+    if ("email" in fieldValues)
+      temp.email = /$^|.+@.+..+/.test(fieldValues.email)
+        ? ""
+        : "Email is not valid.";
+    if ("password" in fieldValues)
+      temp.password =
+        fieldValues.password.length >= 6
+          ? ""
+          : "Password should be at least 6 characters";
+    setErrors({
+      ...temp,
+    });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
   };
+  const { values, handleInputChange, clearInputs, errors, setErrors } = useForm(
+    initialValues,
+    true,
+    validate
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
+    if (!validate()) {
+      window.alert("form is not valid");
+    }
+    clearInputs();
   };
 
   const { container, Typography } = useStyles();
@@ -63,14 +86,16 @@ function Login() {
                   name="email"
                   value={values.email}
                   onChange={handleInputChange}
+                  error={errors.email}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} ms={12}>
                 <Input
                   label="Password"
                   name="password"
                   value={values.password}
                   onChange={handleInputChange}
+                  error={errors.password}
                 />
               </Grid>
               <Grid item xs={12}>

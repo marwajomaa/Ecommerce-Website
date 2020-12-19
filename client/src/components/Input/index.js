@@ -10,6 +10,7 @@ export default function Input(props) {
       name={name}
       value={value}
       onChange={onChange}
+      style={{ width: "100%" }}
       {...other}
       {...(error && { error: true, helperText: error })}
     />
