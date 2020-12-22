@@ -56,7 +56,7 @@ export default function Header() {
   const displayDesktop = () => {
     return (
       <Toolbar container xs={12} className={toolbar}>
-        {Logo}
+        {isAdmin ? "ADMIN" : Logo}
         <div>
           {desktopRoutes()}
           <ShoppingCart />
@@ -202,7 +202,7 @@ export default function Header() {
             <div className={drawerContainer}>{mobileRoutes()}</div>
           </Drawer>
 
-          {Logo}
+          {isAdmin ? "ADMIN" : Logo}
         </Toolbar>
         <ShoppingCart />
       </>

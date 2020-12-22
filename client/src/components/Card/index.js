@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
   CardActions,
@@ -28,12 +28,14 @@ export default function MediaCard({ product }) {
   const globalState = useContext(GlobalState);
   const [isLoggedIn] = globalState.token;
   const [isAdmin] = globalState.userAPI.isAdmin;
-  const { category, content, price, _id } = product;
+  const { deleteProduct } = globalState.productsAPI;
+  const { category, content, price, _id, checked } = product;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
+        {isAdmin && <Checkbox checked={checked} />}
         <CardMedia
           className={classes.media}
           image={img}
@@ -57,19 +59,36 @@ export default function MediaCard({ product }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        {!isAdmin && (
-          <Button
-            color="secondary"
-            style={{ width: "50%" }}
-            text="Buy"
-            href={isLoggedIn ? "#" : "/signup"}
-          />
+        {isAdmin ? (
+          <>
+            <Button
+              color="primary"
+              style={{ width: "50%" }}
+              text="Edit"
+              href={`/edit_product/${_id}`}
+            />
+            <Button
+              color="secondary"
+              style={{ width: "50%" }}
+              text="Delete"
+              onClick={() => deleteProduct(_id)}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              color="secondary"
+              style={{ width: "50%" }}
+              text="Buy"
+              href={isLoggedIn ? "#" : "/signup"}
+            />
+            <Button
+              style={{ width: "50%" }}
+              text="View"
+              href={`/product/detail/${_id}`}
+            />
+          </>
         )}
-        <Button
-          style={{ width: "50%" }}
-          text="View"
-          href={`/product/detail/${_id}`}
-        />
       </CardActions>
     </Card>
   );

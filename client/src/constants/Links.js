@@ -1,3 +1,7 @@
+const logoutUser = () => {
+  localStorage.removeItem("token");
+};
+
 export const adminRoutes = [
   {
     label: "Create Product",
@@ -6,6 +10,11 @@ export const adminRoutes = [
   {
     label: "Categories",
     href: "/category",
+  },
+  {
+    label: "Log Out",
+    href: "/",
+    onClick: logoutUser,
   },
 ];
 
@@ -23,7 +32,7 @@ export const unLoggedRoutes = [
 export const loggedRoutes = [
   {
     label: "Shop",
-    href: "/products",
+    href: "/",
   },
   {
     label: "My Account",
@@ -31,6 +40,9 @@ export const loggedRoutes = [
   },
   {
     label: "Log Out",
-    href: "/logout",
+    href: "/",
+    onClick: () => {
+      localStorage.removeItem("token");
+    },
   },
 ];

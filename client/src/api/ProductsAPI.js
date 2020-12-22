@@ -9,12 +9,18 @@ function ProductsAPI() {
     setProducts(res.data.products);
   };
 
+  const deleteProduct = async (id) => {
+    const res = await axios.delete(`/api/products//product/${id}`);
+    alert("product deleted successfully");
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
   return {
     products: [products, setProducts],
+    deleteProduct,
   };
 }
 
