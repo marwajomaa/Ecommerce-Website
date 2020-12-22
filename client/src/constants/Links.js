@@ -1,4 +1,15 @@
-export const headersData = [
+export const adminRoutes = [
+  {
+    label: "Create Product",
+    href: "/create_product",
+  },
+  {
+    label: "Categories",
+    href: "/category",
+  },
+];
+
+export const unLoggedRoutes = [
   {
     label: "Products",
     href: "/",
@@ -9,9 +20,9 @@ export const headersData = [
   },
 ];
 
-export const headersDataLogin = [
+export const loggedRoutes = [
   {
-    label: "Products",
+    label: "Shop",
     href: "/products",
   },
   {

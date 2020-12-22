@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import img from "../../assets/img.jpg";
 import Button from "../Button";
+import { GlobalState } from "../../GlobalState";
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard({ product }) {
+  const globalState = useContext(GlobalState);
+  const [isLoggedIn] = globalState.token;
+  const [isAdmin] = globalState.userAPI.isAdmin;
   const { category, content, price, _id } = product;
   const classes = useStyles();
 
@@ -53,12 +57,14 @@ export default function MediaCard({ product }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button
-          color="secondary"
-          style={{ width: "50%" }}
-          text="Buy"
-          href="#"
-        />
+        {!isAdmin && (
+          <Button
+            color="secondary"
+            style={{ width: "50%" }}
+            text="Buy"
+            href={isLoggedIn ? "#" : "/signup"}
+          />
+        )}
         <Button
           style={{ width: "50%" }}
           text="View"

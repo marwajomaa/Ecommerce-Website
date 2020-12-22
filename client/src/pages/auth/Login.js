@@ -68,7 +68,7 @@ function Login() {
 
     try {
       const res = await axios.post("/api/users/login", { ...values });
-      console.log(res.data.user, "000000000000000");
+      console.log(res.data.user, "user");
       localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstLogin", true);

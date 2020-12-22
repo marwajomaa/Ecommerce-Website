@@ -8,14 +8,16 @@ function UserApi(token) {
 
   useEffect(() => {
     if (token) {
+      setIsLoggedIn(true);
       const getUser = async () => {
         try {
           const res = await axios.get("/api/users/info", {
             headers: { Authorization: token },
           });
-          setIsLoggedIn(true);
-          setUser(res.data);
-          if (res.data.role === 1) setIsAdmin(true);
+          if (res) {
+            setUser(res.data);
+            if (res.data.role === 1) setIsAdmin(true);
+          }
         } catch (err) {
           alert(err.response.data.error);
         }

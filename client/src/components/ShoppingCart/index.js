@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Badge, IconButton, makeStyles } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { GlobalState } from "../../GlobalState";
 
 export const useStyles = makeStyles(() => ({
   Cart: {
@@ -13,12 +14,21 @@ export const useStyles = makeStyles(() => ({
 const { Cart } = useStyles;
 
 export const ShoppingCart = () => {
+  const globalState = useContext(GlobalState);
+  const [isLoggedIn] = globalState.token;
+  const [isAdmin] = globalState.userAPI.isAdmin;
   return (
     <>
       <IconButton>
-        <Badge badgeContent={5} color="secondary">
-          <ShoppingCartIcon />
-        </Badge>
+        {isLoggedIn && !isAdmin ? (
+          <Badge badgeContent={5} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        ) : (
+          <Badge badgeContent={0} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        )}
       </IconButton>
     </>
   );

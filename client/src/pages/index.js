@@ -10,7 +10,7 @@ import NotFound from "./404Page";
 
 function Pages({ style }) {
   const state = useContext(GlobalState);
-  console.log(state, "ssssssssssss");
+  console.log(state, "state");
   return (
     <div className={style}>
       <Switch>

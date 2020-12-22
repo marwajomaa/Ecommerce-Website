@@ -13,13 +13,13 @@ const useStyles = makeStyles(() => ({
     maxWidth: "400px",
     margin: "0 auto",
     justifyContent: "center",
-    minHeight: "80vh",
+    minHeight: "70vh",
     alignItems: "center",
   },
   Typography: {
     textAlign: "center",
-    fontSize: "32px",
     fontWeight: "bold",
+    fontSize: "20px",
   },
 }));
 
@@ -92,7 +92,7 @@ function Signup() {
       >
         <Grid item xs={12} className={Typography}>
           <Typography component="h1" variant="h1">
-            Register
+            Sign Up and Start Shopping!
           </Typography>
         </Grid>
         <Grid item xs={12}>
