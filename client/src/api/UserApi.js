@@ -5,7 +5,20 @@ function UserApi(token) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState({});
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([
+    {
+      _id: "5f9d8d26db4c0f3288cd1f74",
+      category: "labtops",
+      checked: false,
+      content: "thuis is one of the great products",
+      description: "great product",
+      price: 343,
+      product_id: "6",
+      quantity: 1,
+      sold: 0,
+      title: "product6",
+    },
+  ]);
 
   useEffect(() => {
     if (token) {
@@ -20,7 +33,7 @@ function UserApi(token) {
             if (res.data.role === 1) setIsAdmin(true);
           }
         } catch (err) {
-          alert(err.response.data.error);
+          console.error(err.response.data.error);
         }
       };
       getUser();
@@ -28,7 +41,6 @@ function UserApi(token) {
   }, [token]);
 
   const addToCart = (product) => {
-    console.log(product, "prrrrrrroduct");
     if (!isLoggedIn) alert("Please login to continue buying");
 
     const check = cart.every((item) => {

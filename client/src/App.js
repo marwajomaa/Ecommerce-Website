@@ -7,13 +7,13 @@ import Pages from "./pages";
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    width: "90%",
+    width: "95%",
     margin: "0 auto",
     marginBottom: "20px",
   },
   main: {
     padding: "0 20px",
-    marginTop: "100px",
+    marginTop: "90px",
     minHeight: "100vh",
     width: "100%",
   },

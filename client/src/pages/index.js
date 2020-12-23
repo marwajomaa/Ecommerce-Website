@@ -25,7 +25,7 @@ function Pages({ style }) {
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/edit_product/:id" exact component={EditProduct} />
-        <Route path="/Cart" exact component={Cart} />
+        <Route path="/cart" exact component={Cart} />
         <Route path="*" exact component={NotFound} />
       </Switch>
     </div>

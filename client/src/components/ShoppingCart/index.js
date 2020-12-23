@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Badge, IconButton, makeStyles } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { GlobalState } from "../../GlobalState";
@@ -19,7 +20,7 @@ export const ShoppingCart = () => {
   const [cart, setCart] = globalState.userAPI.cart;
   const [isAdmin] = globalState.userAPI.isAdmin;
   return (
-    <>
+    <Link to="/cart">
       <IconButton>
         {isLoggedIn && !isAdmin ? (
           <Badge badgeContent={cart.length} color="secondary">
@@ -31,6 +32,6 @@ export const ShoppingCart = () => {
           </Badge>
         )}
       </IconButton>
-    </>
+    </Link>
   );
 };
