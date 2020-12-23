@@ -11,6 +11,7 @@ import NotFound from "./404Page";
 
 function Pages({ style }) {
   const state = useContext(GlobalState);
+  const [isLoggedIn] = state.userAPI.isLoggedIn;
   console.log(state, "state");
   return (
     <div className={style}>
@@ -22,10 +23,18 @@ function Pages({ style }) {
           path="/product/detail/:id"
           component={ProductDetails}
         />
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={Signup} />
-        <Route path="/edit_product/:id" exact component={EditProduct} />
-        <Route path="/cart" exact component={Cart} />
+        <Route path="/login" exact component={isLoggedIn ? Products : Login} />
+        <Route
+          path="/signup"
+          exact
+          component={isLoggedIn ? Products : Signup}
+        />
+        <Route
+          path="/edit_product/:id"
+          exact
+          component={isLoggedIn && EditProduct}
+        />
+        <Route path="/cart" exact component={isLoggedIn ? Cart : Signup} />
         <Route path="*" exact component={NotFound} />
       </Switch>
     </div>

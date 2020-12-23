@@ -144,6 +144,7 @@ exports.updateCart = async (req, res) => {
     );
     return res.json({
       status: "success",
+      cart: user.cart,
       msg: "Added to Cart successfully",
     });
   } catch (err) {

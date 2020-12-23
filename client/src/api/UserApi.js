@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-function UserApi(token) {
+function UserApi() {
+  const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState({});
   const [cart, setCart] = useState([]);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (token) {
+      setToken(token);
       setIsLoggedIn(true);
       const getUser = async () => {
         try {
@@ -16,7 +21,9 @@ function UserApi(token) {
             headers: { Authorization: token },
           });
           if (res) {
-            setUser(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data));
+            const user = localStorage.getItem("user");
+            setUser(JSON.parse(user));
             setCart(res.data.cart);
             if (res.data.role === 1) setIsAdmin(true);
           }
@@ -26,7 +33,7 @@ function UserApi(token) {
       };
       getUser();
     }
-  }, [token]);
+  }, []);
 
   const addToCart = async (product) => {
     if (!isLoggedIn) alert("Please login to continue buying");
@@ -49,12 +56,40 @@ function UserApi(token) {
     }
   };
 
+  const removeProductFromCart = async (product) => {
+    try {
+      if (!isLoggedIn) {
+        alert("Please login to continue...");
+        history.push("/login");
+      }
+
+      const removeItem = cart.filter((item) => {
+        return item._id !== product._id;
+      });
+
+      console.log(removeItem, "removeeeeeee");
+
+      setCart([...removeItem]);
+      const res = await axios.patch(
+        "/api/users/cart",
+        { cart: [...removeItem] },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log(res.data.cart, "uuuuuuuuuuuuuuuuu");
+    } catch (err) {
+      console.warn(err.message);
+    }
+  };
+
   return {
     isLoggedIn: [isLoggedIn, setIsLoggedIn],
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],
     cart: [cart, setCart],
     addToCart,
+    removeProductFromCart,
   };
 }
 

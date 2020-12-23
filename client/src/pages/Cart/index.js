@@ -64,9 +64,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Cart() {
   const globalState = useContext(GlobalState);
-  const [isLoggedIn] = globalState.token;
-  const [cart, setCart] = globalState.userAPI.cart;
+  const [cart] = globalState.userAPI.cart;
   const [isAdmin] = globalState.userAPI.isAdmin;
+  const removeProductFromCart = globalState.userAPI.removeProductFromCart;
   const [total, setTotal] = useState(0);
   const classes = useStyles();
 
@@ -81,7 +81,7 @@ function Cart() {
   return (
     <>
       <Paper elevation={0}>
-        {cart.map(({ title, price, description, quantity, content }) => {
+        {cart.map((p) => {
           return (
             <Grid container xs={12} spacing={3} className={classes.root}>
               <Grid item xs={12} sm={6}>
@@ -98,16 +98,16 @@ function Cart() {
                   gutterBottom={2}
                   className={classes.typography}
                 >
-                  {title}
+                  {p.title}
                 </Typography>
                 <Typography variant="h6" component="span" gutterBottom={1}>
-                  ${price * quantity}
+                  ${p.price * p.quantity}
                 </Typography>
                 <Typography variant="h5" component="p" gutterBottom={2}>
-                  {description}
+                  {p.description}
                 </Typography>
                 <Typography variant="h6" component="p" gutterBottom={2}>
-                  {content}
+                  {p.content}
                 </Typography>
                 <Grid item spacing={1} gutterBottom={2}>
                   <Button text="-" className={classes.button} />
@@ -116,12 +116,12 @@ function Cart() {
                     component="span"
                     style={{ textAlign: "center", padding: "20px 15px" }}
                   >
-                    {quantity}
+                    {p.quantity}
                   </Typography>
                   <Button text="+" className={classes.button} />
                 </Grid>
                 <IconButton
-                  onClick={() => console.log("helllo")}
+                  onClick={() => removeProductFromCart(p)}
                   className={classes.deleteIcon}
                 >
                   <HighlightOffIcon />
