@@ -1,5 +1,5 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
   CardActions,
@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import img from "../../assets/img.jpg";
 import Button from "../Button";
+import { GlobalState } from "../../GlobalState";
 
 const useStyles = makeStyles({
   root: {
@@ -24,12 +25,18 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard({ product }) {
-  const { category, content, price, _id } = product;
+  const globalState = useContext(GlobalState);
+  const [isLoggedIn] = globalState.token;
+  const addToCart = globalState.userAPI.addToCart;
+  const [isAdmin] = globalState.userAPI.isAdmin;
+  const { deleteProduct } = globalState.productsAPI;
+  const { category, content, price, _id, checked } = product;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
+        {isAdmin && <Checkbox checked={checked} />}
         <CardMedia
           className={classes.media}
           image={img}
@@ -53,17 +60,37 @@ export default function MediaCard({ product }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button
-          color="secondary"
-          style={{ width: "50%" }}
-          text="Buy"
-          href="#"
-        />
-        <Button
-          style={{ width: "50%" }}
-          text="View"
-          href={`/product/detail/${_id}`}
-        />
+        {isAdmin ? (
+          <>
+            <Button
+              color="primary"
+              style={{ width: "50%" }}
+              text="Edit"
+              href={`/edit_product/${_id}`}
+            />
+            <Button
+              color="secondary"
+              style={{ width: "50%" }}
+              text="Delete"
+              onClick={() => deleteProduct(_id)}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              color="secondary"
+              style={{ width: "50%" }}
+              text="Buy"
+              href={isLoggedIn ? "#" : "/signup"}
+              onClick={() => addToCart(product)}
+            />
+            <Button
+              style={{ width: "50%" }}
+              text="View"
+              href={`/product/detail/${_id}`}
+            />
+          </>
+        )}
       </CardActions>
     </Card>
   );

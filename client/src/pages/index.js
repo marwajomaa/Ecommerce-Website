@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { GlobalState } from "../GlobalState";
 import Products from "./Products";
 import ProductDetails from "./ProductDetails";
+import EditProduct from "./EditProduct";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Cart from "./Cart";
@@ -10,7 +11,8 @@ import NotFound from "./404Page";
 
 function Pages({ style }) {
   const state = useContext(GlobalState);
-  console.log(state, "ssssssssssss");
+  const [isLoggedIn] = state.userAPI.isLoggedIn;
+  console.log(state, "state");
   return (
     <div className={style}>
       <Switch>
@@ -21,9 +23,18 @@ function Pages({ style }) {
           path="/product/detail/:id"
           component={ProductDetails}
         />
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={Signup} />
-        <Route path="/Cart" exact component={Cart} />
+        <Route path="/login" exact component={isLoggedIn ? Products : Login} />
+        <Route
+          path="/signup"
+          exact
+          component={isLoggedIn ? Products : Signup}
+        />
+        <Route
+          path="/edit_product/:id"
+          exact
+          component={isLoggedIn && EditProduct}
+        />
+        <Route path="/cart" exact component={isLoggedIn ? Cart : Signup} />
         <Route path="*" exact component={NotFound} />
       </Switch>
     </div>

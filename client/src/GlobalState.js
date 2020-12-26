@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
       setToken(token);
       setTimeout(() => console.log(token), 3000);
     }
-  }, []);
+  }, [token]);
 
   const state = {
     token: [token, setToken],

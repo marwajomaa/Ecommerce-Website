@@ -49,6 +49,8 @@ function ProductDetails() {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
   const [productDetails, setProductDetails] = useState([]);
+  const [isLoggedIn] = state.token;
+  const [isAdmin] = state.userAPI.isAdmin;
 
   useEffect(() => {
     if (params.id) {
@@ -110,12 +112,14 @@ function ProductDetails() {
           >
             Sold: {sold}
           </Typography>
-          <Button
-            style={{ width: "150px", marginTop: "20px" }}
-            text="Buy Now"
-            color="primary"
-            href="#"
-          />
+          {!isAdmin && (
+            <Button
+              style={{ marginTop: "20px" }}
+              text={isLoggedIn && !isAdmin ? "Buy Now" : "Login to buy"}
+              color="primary"
+              href={isLoggedIn ? "#" : "/signup"}
+            />
+          )}
         </Box>
       </Grid>
       <Grid container xs={12} style={{ padding: "50px 0" }}>
