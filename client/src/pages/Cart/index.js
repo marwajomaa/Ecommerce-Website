@@ -11,6 +11,8 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { GlobalState } from "../../GlobalState";
 import img from "../../assets/img.jpg";
 import Button from "../../components/Button";
+import Loading from "../../components/Loading";
+import PaypalButton from "./PaypalButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +72,7 @@ function Cart() {
     removeProductFromCart,
     incrementQuantity,
     decrementQuantity,
+    tranSuccess,
   } = globalState.userAPI;
   const [total, setTotal] = useState(0);
   const classes = useStyles();
@@ -86,7 +89,7 @@ function Cart() {
     }
   }, [cart]);
 
-  if (!cart) {
+  if (cart.length === 0) {
     return (
       <Typography variant="h3" component="p" style={{ textAlign: "center" }}>
         Cart is empty
@@ -156,12 +159,14 @@ function Cart() {
           );
         })}
       </Paper>
-      <Grid item className={classes.total}>
-        <Typography variant="h4" component="p">
-          Total: ${total}
-        </Typography>
-        <Button href="/cart" text="Payment" />
-      </Grid>
+      {cart.length !== 0 && (
+        <Grid item className={classes.total}>
+          <Typography variant="h4" component="p">
+            Total: ${total}
+          </Typography>
+          <PaypalButton total={total} tranSuccess={tranSuccess} />
+        </Grid>
+      )}
     </>
   );
 }
