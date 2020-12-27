@@ -60,7 +60,7 @@ function UserApi() {
     }
   };
 
-  const cartUpdate = async () => {
+  const cartUpdate = async (cart) => {
     try {
       await axios.patch(
         "/api/users/cart",
@@ -101,7 +101,7 @@ function UserApi() {
       if (item._id === id) item.quantity += 1;
     });
     setCart([...cart]);
-    cartUpdate();
+    cartUpdate(cart);
   };
 
   const decrementQuantity = (id) => {
@@ -111,11 +111,20 @@ function UserApi() {
       }
     });
     setCart([...cart]);
-    cartUpdate();
+    cartUpdate(cart);
   };
 
   const tranSuccess = async (payment) => {
     console.log(payment, "payment");
+    const { paymentID, address } = payment;
+    await axios.post(
+      "/api/payments",
+      { cart, paymentID, address },
+      { headers: { Authorization: token } }
+    );
+    setCart([]);
+    await cartUpdate([]);
+    alert("You have successfully placed an order");
   };
 
   return {

@@ -1,4 +1,5 @@
 const Payments = require("../models/paymentModel");
+const Products = require("../models/productModel");
 const { getUserById } = require("../queries/users");
 
 exports.getPayment = async (req, res, next) => {
@@ -27,8 +28,22 @@ exports.createPayment = async (req, res, next) => {
       address,
     });
 
-    res.json({ status: "success", data: newPayment });
+    cart.forEach((item) => {
+      return sold(item._id, item.quantity, item.sold);
+    });
+
+    await newPayment.save();
+
+    res.json({ status: "success", newPayment });
   } catch (err) {
     return res.status(500).json({ msg: err.message });
+  }
+};
+
+const sold = async (id, quantity, oldSold) => {
+  try {
+    await Products.findOneAndUpdate({ _id: id }, { sold: quantity + oldSold });
+  } catch (err) {
+    console.error(err.message);
   }
 };

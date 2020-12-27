@@ -51,6 +51,7 @@ function ProductDetails() {
   const [productDetails, setProductDetails] = useState([]);
   const [isLoggedIn] = state.token;
   const [isAdmin] = state.userAPI.isAdmin;
+  const { addToCart } = state.userAPI;
 
   useEffect(() => {
     if (params.id) {
@@ -118,6 +119,7 @@ function ProductDetails() {
               text={isLoggedIn && !isAdmin ? "Buy Now" : "Login to buy"}
               color="primary"
               href={isLoggedIn ? "#" : "/signup"}
+              onClick={() => addToCart(productDetails)}
             />
           )}
         </Box>
