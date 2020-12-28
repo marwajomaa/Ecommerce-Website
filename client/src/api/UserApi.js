@@ -9,6 +9,22 @@ function UserApi() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState([]);
   const [token, setToken] = useState("");
+  const [orderHistory, setOrderHistory] = useState([]);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const history = await axios.get("/api/users/history", {
+          headers: { Authorization: token },
+        });
+        console.log(history, "reeeeeeeesponse");
+        setOrderHistory(history.data);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    getHistory();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -70,7 +86,7 @@ function UserApi() {
         }
       );
     } catch (err) {
-      console.warn(err.response.data.error);
+      console.warn(err.message);
     }
   };
 
@@ -131,6 +147,7 @@ function UserApi() {
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],
     cart: [cart, setCart],
+    orderHistory: [orderHistory],
     addToCart,
     removeProductFromCart,
     incrementQuantity,
