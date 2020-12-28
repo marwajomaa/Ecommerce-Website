@@ -8,6 +8,7 @@ import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Cart from "./Cart";
 import OrderHistory from "./OrderHistory";
+import OrderDetails from "./OrderHistory/OrderDetails";
 import NotFound from "./404Page";
 
 function Pages({ style }) {
@@ -40,6 +41,11 @@ function Pages({ style }) {
           path="/history"
           exact
           component={isLoggedIn ? OrderHistory : Signup}
+        />
+        <Route
+          path="/history/:id"
+          exact
+          component={isLoggedIn ? OrderDetails : NotFound}
         />
         <Route path="*" exact component={NotFound} />
       </Switch>

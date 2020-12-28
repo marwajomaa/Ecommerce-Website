@@ -10,6 +10,7 @@ function UserApi() {
   const [cart, setCart] = useState([]);
   const [token, setToken] = useState("");
   const [orderHistory, setOrderHistory] = useState([]);
+  const [callback, setCallback] = useState(false);
 
   useEffect(() => {
     const getHistory = async () => {
@@ -24,7 +25,7 @@ function UserApi() {
       }
     };
     getHistory();
-  }, []);
+  }, [callback]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -70,7 +71,6 @@ function UserApi() {
           headers: { Authorization: token },
         }
       );
-      console.log(res.data.cart);
     } else {
       alert("This product already in the shopping cart");
     }
@@ -139,6 +139,7 @@ function UserApi() {
     );
     setCart([]);
     await cartUpdate([]);
+    setCallback(!callback);
     alert("You have successfully placed an order");
   };
 
@@ -147,7 +148,7 @@ function UserApi() {
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],
     cart: [cart, setCart],
-    orderHistory: [orderHistory],
+    orderHistory: [orderHistory, setOrderHistory],
     addToCart,
     removeProductFromCart,
     incrementQuantity,

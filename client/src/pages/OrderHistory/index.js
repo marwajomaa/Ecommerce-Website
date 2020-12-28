@@ -11,6 +11,8 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
+  Grid,
 } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { GlobalState } from "../../GlobalState";
@@ -22,6 +24,10 @@ const StyledTableCell = withStyles((theme) => ({
   },
   body: {
     fontSize: 14,
+  },
+  paragraph: {
+    textAlign: "center",
+    display: "block",
   },
 }))(TableCell);
 
@@ -56,32 +62,43 @@ function OrderHistory() {
   if (!orderHistory) return <div>No Orders</div>;
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>PaymentID</StyledTableCell>
-            <StyledTableCell>Date Of Purchased</StyledTableCell>
-            <StyledTableCell>View</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.PaymentID}>
-              <StyledTableCell>{row.PaymentID}</StyledTableCell>
-              <StyledTableCell>
-                <Moment format="DD/MM/YYYY" date={row.PurchasedAt} />
-              </StyledTableCell>
-              <StyledTableCell>
-                <Link to={`/history/${row.View}`}>
-                  <ArrowForwardIcon />
-                </Link>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper elevation={0}>
+      <Typography
+        variant="h6"
+        component="h6"
+        style={{ textAlign: "center", margin: "30px auto" }}
+      >
+        You have <strong>{rows.length}</strong> orders
+      </Typography>
+      {rows.length !== 0 && (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>PaymentID</StyledTableCell>
+                <StyledTableCell>Date Of Purchased</StyledTableCell>
+                <StyledTableCell>View</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <StyledTableRow key={row.PaymentID}>
+                  <StyledTableCell>{row.PaymentID}</StyledTableCell>
+                  <StyledTableCell>
+                    <Moment format="DD/MM/YYYY" date={row.PurchasedAt} />
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Link to={`/history/${row.View}`}>
+                      <ArrowForwardIcon />
+                    </Link>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Paper>
   );
 }
 
