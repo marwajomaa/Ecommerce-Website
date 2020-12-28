@@ -1,4 +1,5 @@
 const Users = require("../models/userModel");
+const Payments = require("../models/paymentModel");
 const httpError = require("../middlewares/http-error");
 const bcrypt = require("bcrypt");
 const { getUserById } = require("../queries/users");
@@ -149,5 +150,14 @@ exports.updateCart = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getPayment = async (req, res) => {
+  try {
+    const history = await Payments.find({ user_id: req.user.userId });
+    res.json(history);
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
 };
