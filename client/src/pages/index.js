@@ -9,11 +9,13 @@ import Signup from "./auth/Signup";
 import Cart from "./Cart";
 import OrderHistory from "./OrderHistory";
 import OrderDetails from "./OrderHistory/OrderDetails";
+import Categories from "./Categories";
 import NotFound from "./404Page";
 
 function Pages({ style }) {
   const state = useContext(GlobalState);
   const [isLoggedIn] = state.userAPI.isLoggedIn;
+  const [isAdmin] = state.userAPI.isAdmin;
   console.log(state, "state");
   return (
     <div className={style}>
@@ -41,6 +43,11 @@ function Pages({ style }) {
           path="/history"
           exact
           component={isLoggedIn ? OrderHistory : Signup}
+        />
+        <Route
+          path="/Categories"
+          exact
+          component={isAdmin ? Categories : NotFound}
         />
         <Route
           path="/history/:id"
