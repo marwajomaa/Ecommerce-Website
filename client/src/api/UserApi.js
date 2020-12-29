@@ -9,6 +9,23 @@ function UserApi() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState([]);
   const [token, setToken] = useState("");
+  const [orderHistory, setOrderHistory] = useState([]);
+  const [callback, setCallback] = useState(false);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const history = await axios.get("/api/users/history", {
+          headers: { Authorization: token },
+        });
+        console.log(history, "reeeeeeeesponse");
+        setOrderHistory(history.data);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    getHistory();
+  }, [callback]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,7 +71,6 @@ function UserApi() {
           headers: { Authorization: token },
         }
       );
-      console.log(res.data.cart);
     } else {
       alert("This product already in the shopping cart");
     }
@@ -70,7 +86,7 @@ function UserApi() {
         }
       );
     } catch (err) {
-      console.warn(err.response.data.error);
+      console.warn(err.message);
     }
   };
 
@@ -123,6 +139,7 @@ function UserApi() {
     );
     setCart([]);
     await cartUpdate([]);
+    setCallback(!callback);
     alert("You have successfully placed an order");
   };
 
@@ -131,6 +148,7 @@ function UserApi() {
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],
     cart: [cart, setCart],
+    orderHistory: [orderHistory, setOrderHistory],
     addToCart,
     removeProductFromCart,
     incrementQuantity,

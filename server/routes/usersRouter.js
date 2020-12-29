@@ -8,6 +8,7 @@ const {
   logout,
   getUser,
   updateCart,
+  getPayment,
 } = require("../controllers/userCtrl");
 
 router.post("/register", userRegister);
@@ -21,6 +22,8 @@ router.post("/login", loginUser);
 router.get("/info", auth(), getUser);
 
 router.patch("/cart", auth(), updateCart);
+
+router.get("/history", auth(), getPayment);
 
 router.get("/logout", logout);
 
