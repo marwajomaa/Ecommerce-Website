@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import OrderHistory from "./OrderHistory";
 import OrderDetails from "./OrderHistory/OrderDetails";
 import Categories from "./Categories";
+import CreateProduct from "./CreateProduct";
 import NotFound from "./404Page";
 
 function Pages({ style }) {
@@ -44,7 +45,16 @@ function Pages({ style }) {
           exact
           component={isLoggedIn ? OrderHistory : Signup}
         />
-        <Route path="/categories" exact component={Categories} />
+        <Route
+          path="/categories"
+          exact
+          component={isAdmin ? Categories : NotFound}
+        />
+        <Route
+          path="/create_product"
+          exact
+          component={isAdmin ? CreateProduct : NotFound}
+        />
         <Route
           path="/history/:id"
           exact
