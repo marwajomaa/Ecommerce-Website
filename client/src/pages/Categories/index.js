@@ -25,16 +25,22 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  Typography: {
-    textAlign: "center",
-    fontSize: "32px",
-    fontWeight: "bold",
+  typography: {
+    display: "inline-block",
+    width: "30%",
+    fontSize: "1.2rem",
+    padding: "0 5px",
   },
   box: {
+    width: "100%",
     margin: "1.5rem auto",
     border: "1px solid #eee",
     maxWidth: "350px",
     boxShadow: "1px 1px 1px #eee",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
 }));
 
@@ -49,21 +55,20 @@ function Categories() {
   const [onEdit, setOnEdit] = useState(false);
   const [id, setID] = useState("");
   const classes = useStyles();
-  console.log(typeof categories, "----------------");
 
   const onEditCategory = (_id, name) => {
-    setOnEdit(true);
     setCategory(name);
     setID(_id);
-    setTimeout(() => console.log(onEdit), 3000);
+    setOnEdit(true);
+    setTimeout(() => console.log(onEdit), 4000);
   };
 
-  const createCategory = async (name, onEdit) => {
+  const createCategory = async () => {
     try {
       if (onEdit) {
         const res = await axios.patch(
           `/api/categories/category/${id}`,
-          { name },
+          { name: category },
           {
             headers: { Authorization: token },
           }
@@ -72,7 +77,7 @@ function Categories() {
       } else {
         const res = await axios.post(
           "/api/categories/category",
-          { name },
+          { name: category },
           {
             headers: { Authorization: token },
           }
@@ -98,10 +103,7 @@ function Categories() {
 
   return (
     <Paper elevation={0}>
-      <form
-        onSubmit={() => createCategory(values.category)}
-        className={classes.container}
-      >
+      <form onSubmit={createCategory} className={classes.container}>
         <Grid container xs={12} direction="column" spacing={2}>
           <Grid item xs={12}>
             <Input
@@ -126,14 +128,18 @@ function Categories() {
         {categories &&
           categories.map(({ name, _id }) => (
             <Grid className={classes.box}>
-              <Typography key={name} variant="h5" component="span">
+              <Typography
+                key={name}
+                variant="h5"
+                component="span"
+                className={classes.typography}
+              >
                 {name}
               </Typography>
               <ButtonGroup style={{ margin: "1rem auto" }}>
                 <Button
                   text="Edit"
                   variant="contained"
-                  color="primary"
                   style={{
                     alignSelf: "center",
                     width: "100%",
