@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import {
   Paper,
   Grid,
@@ -41,10 +42,50 @@ function Categories() {
   const state = useContext(GlobalState);
   const { values, handleInputChange } = useForm(initialValues, false);
   const [categories] = state.categoryAPI.categories;
-  const { createCategory } = state.categoryAPI;
+  const [callback, setCallback] = state.categoryAPI.callback;
+  const [token] = state.token;
+  // const { createCategory } = state.categoryAPI;
   const [category, setCategory] = useState("");
+  const [onEdit, setOnEdit] = useState(false);
+  const [id, setID] = useState("");
   const classes = useStyles();
   console.log(typeof categories, "----------------");
+
+  const onEditCategory = (_id, name) => {
+    setOnEdit(true);
+    setCategory(name);
+    setID(_id);
+    setTimeout(() => console.log(onEdit), 3000);
+  };
+
+  const createCategory = async (name, onEdit) => {
+    console.log(onEdit, "ooooooooonEdit");
+    try {
+      if (onEdit) {
+        const res = await axios.patch(
+          `/api/categories/category/${id}`,
+          { name },
+          {
+            headers: { Authorization: token },
+          }
+        );
+        alert(res.data.msg);
+      } else {
+        const res = await axios.post(
+          "/api/categories/category",
+          { name },
+          {
+            headers: { Authorization: token },
+          }
+        );
+        alert(res.data.msg);
+      }
+      setCallback(!callback);
+      setOnEdit(false);
+    } catch (err) {
+      console.error(err.response.data.msg);
+    }
+  };
 
   return (
     <Paper elevation={0}>
@@ -57,13 +98,13 @@ function Categories() {
             <Input
               label="Add New Category"
               name="category"
-              value={values.category}
-              onChange={handleInputChange}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
             <Button
-              text="Add Category"
+              text={onEdit ? "Update" : "Add Category"}
               type="outlined"
               color="primary"
               style={{ alignSelf: "center", width: "100%" }}
@@ -74,10 +115,10 @@ function Categories() {
       <Box style={{ textAlign: "center", margin: "2rem auto" }}>
         <Typography variant="h4">Categories</Typography>
         {categories &&
-          categories.map((category) => (
+          categories.map(({ name, _id }) => (
             <Grid className={classes.box}>
-              <Typography key={category.name} variant="h5" component="span">
-                {category.name}
+              <Typography key={name} variant="h5" component="span">
+                {name}
               </Typography>
               <ButtonGroup style={{ margin: "1rem auto" }}>
                 <Button
@@ -89,6 +130,7 @@ function Categories() {
                     width: "100%",
                     margin: "0 1rem",
                   }}
+                  onClick={() => onEditCategory(_id, name)}
                 />
                 <Button
                   text="Delete"
