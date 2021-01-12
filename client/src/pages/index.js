@@ -34,11 +34,6 @@ function Pages({ style }) {
           exact
           component={isLoggedIn ? Products : Signup}
         />
-        <Route
-          path="/edit_product/:id"
-          exact
-          component={isLoggedIn && EditProduct}
-        />
         <Route path="/cart" exact component={isLoggedIn ? Cart : Signup} />
         <Route
           path="/history"
@@ -54,6 +49,11 @@ function Pages({ style }) {
           path="/create_product"
           exact
           component={isAdmin ? CreateProduct : NotFound}
+        />
+        <Route
+          path="/edit_product/:id"
+          exact
+          component={isAdmin ? EditProduct : NotFound}
         />
         <Route
           path="/history/:id"

@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Paper, Grid, Typography, makeStyles } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -23,7 +24,7 @@ const useStyles = makeStyles(() => ({
 
 const initialValues = {
   product_id: "",
-  tittle: "",
+  title: "",
   price: 0,
   description: "",
   content: "",
@@ -31,14 +32,14 @@ const initialValues = {
 };
 
 function CreateProduct() {
+  const classes = useStyles({});
   const state = useContext(GlobalState);
   const [categories] = state.categoryAPI.categories;
   const { createProduct } = state.productsAPI;
-  const { values, handleInputChange, clearInputs } = useForm(
+  const { values, handleInputChange, clearInputs, setData } = useForm(
     initialValues,
     false
   );
-  const classes = useStyles({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +55,8 @@ function CreateProduct() {
     await createProduct(product);
   };
 
+  setTimeout(() => console.log(values, "pppppppppproduct"), 3000);
+
   return (
     <Paper elevation={0}>
       <form className={classes.container} onSubmit={handleSubmit}>
@@ -66,7 +69,7 @@ function CreateProduct() {
               label="Title"
               type="text"
               name="title"
-              value={values.title}
+              value={values.title || ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -75,7 +78,7 @@ function CreateProduct() {
               label="Price"
               type="number"
               name="price"
-              value={values.price}
+              value={values.price || ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -84,7 +87,7 @@ function CreateProduct() {
               label="Description"
               type="text"
               name="description"
-              value={values.description}
+              value={values.description || ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -93,7 +96,7 @@ function CreateProduct() {
               label="Content"
               type="text"
               name="content"
-              value={values.content}
+              value={values.content || ""}
               onChange={handleInputChange}
             />
           </Grid>
@@ -101,7 +104,7 @@ function CreateProduct() {
             <Select
               name="category"
               label="Category"
-              value={values.category}
+              value={values.category || ""}
               onChange={handleInputChange}
               options={categories && categories}
             />
