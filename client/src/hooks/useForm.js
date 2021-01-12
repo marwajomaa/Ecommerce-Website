@@ -14,6 +14,10 @@ export function useForm(initialValues, validateOnChange, validate) {
     }
   };
 
+  const setData = (data) => {
+    setValues(data);
+  };
+
   const clearInputs = () => {
     setValues(initialValues);
   };
@@ -27,5 +31,6 @@ export function useForm(initialValues, validateOnChange, validate) {
     setErrors,
     submitError,
     setSubmitError,
+    setData,
   };
 }
