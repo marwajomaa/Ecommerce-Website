@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 function ProductsAPI() {
-  const history = useHistory();
   const [products, setProducts] = useState([]);
+  const [callback, setCallback] = useState(false);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const res = await axios.get("/api/products");
+      setProducts(res.data.products);
+    };
+    getProducts();
+  }, [callback]);
 
   const getProducts = async () => {
     const res = await axios.get("/api/products");
@@ -14,14 +21,12 @@ function ProductsAPI() {
   const deleteProduct = async (id) => {
     await axios.delete(`/api/products/product/${id}`);
     alert("product deleted successfully");
-    history.push("/");
   };
 
   const createProduct = async (product) => {
     try {
       const res = await axios.post("/api/products", product);
       alert(res.data.msg);
-      history.push("/");
     } catch (err) {
       console.log(err.message);
     }
@@ -30,8 +35,7 @@ function ProductsAPI() {
   const editProduct = async (id, product) => {
     try {
       const res = await axios.patch(`/api/products/product/${id}`, product);
-      history.push("/");
-      // alert(res.data.msg);
+      alert(res.data.msg);
     } catch (err) {
       console.log(err.message);
     }
@@ -46,6 +50,7 @@ function ProductsAPI() {
     deleteProduct,
     createProduct,
     editProduct,
+    callback: [callback, setCallback],
   };
 }
 

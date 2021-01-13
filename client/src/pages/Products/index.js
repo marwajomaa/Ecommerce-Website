@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Typography, Grid, Checkbox } from "@material-ui/core";
 import { GlobalState } from "../../GlobalState";
 import ProductItem from "./ProductItem";
@@ -6,8 +7,10 @@ import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 
 function Products() {
+  const history = useHistory();
   const state = useContext(GlobalState);
   const [products, setProducts] = state.productsAPI.products;
+  const [callback, setCallback] = state.productsAPI.callback;
   const { deleteProduct } = state.productsAPI;
   const [isCheck, setIsCheck] = useState(false);
 
@@ -36,12 +39,14 @@ function Products() {
     products.forEach((product) => {
       if (product.checked) deleteProduct(product._id);
     });
+    setCallback(true);
+    setIsCheck(false);
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={5}>
       <Grid item xs={12}>
-        <Typography variant="h6" component="span">
+        <Typography variant="p" component="span">
           Check All
         </Typography>
         <Checkbox checked={isCheck} onChange={checkAll} />
@@ -52,7 +57,7 @@ function Products() {
           onClick={DeleteAll}
         />
       </Grid>
-      <Grid container xs={12} spacing={3}>
+      <Grid container xs={12}>
         {products &&
           products.map((product) => {
             return (
