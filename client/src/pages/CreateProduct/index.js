@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Paper, Grid, Typography, makeStyles } from "@material-ui/core";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { GlobalState } from "../../GlobalState";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -33,9 +33,11 @@ const initialValues = {
 
 function CreateProduct() {
   const classes = useStyles({});
+  const history = useHistory();
   const state = useContext(GlobalState);
   const [categories] = state.categoryAPI.categories;
   const { createProduct } = state.productsAPI;
+  const [callback, setCallback] = state.productsAPI.callback;
   const { values, handleInputChange, clearInputs, setData } = useForm(
     initialValues,
     false
@@ -53,9 +55,9 @@ function CreateProduct() {
     };
 
     await createProduct(product);
+    history.push("/");
+    setCallback(!callback);
   };
-
-  setTimeout(() => console.log(values, "pppppppppproduct"), 3000);
 
   return (
     <Paper elevation={0}>
