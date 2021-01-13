@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({ product }) {
+export default function MediaCard({ product, handleCheck }) {
   const globalState = useContext(GlobalState);
   const [isLoggedIn] = globalState.token;
   const addToCart = globalState.userAPI.addToCart;
@@ -36,7 +36,9 @@ export default function MediaCard({ product }) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        {isAdmin && <Checkbox checked={checked} />}
+        {isAdmin && (
+          <Checkbox checked={checked} onChange={() => handleCheck(_id)} />
+        )}
         <CardMedia
           className={classes.media}
           image={img}

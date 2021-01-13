@@ -6,13 +6,26 @@ import Loading from "../../components/Loading";
 
 function Products() {
   const state = useContext(GlobalState);
-  const [products] = state.productsAPI.products;
+  const [products, setProducts] = state.productsAPI.products;
   if (products.length === 0) return <Loading />;
+
+  const handleCheck = (id) => {
+    products.forEach((product) => {
+      if (product._id === id) product.checked = !product.checked;
+    });
+    setProducts([...products]);
+  };
   return (
     <Grid container spacing={3}>
       {products &&
         products.map((product) => {
-          return <ProductItem key={product._id} product={product} />;
+          return (
+            <ProductItem
+              key={product._id}
+              product={product}
+              handleCheck={handleCheck}
+            />
+          );
         })}
     </Grid>
   );
