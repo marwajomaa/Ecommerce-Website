@@ -40,7 +40,8 @@ function Products() {
     products.forEach((product) => {
       if (product.checked) deleteProduct(product._id);
     });
-    setCallback(true);
+    history.push("/");
+    setCallback(!callback);
     setIsCheck(false);
   };
 
