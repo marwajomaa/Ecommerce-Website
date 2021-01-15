@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
 const { logo } = useStyles;
 
 export const Logo = (
-  <Typography variant="h6" component="h1" className={logo}>
+  <Typography variant="h4" component="h4" className={logo}>
     Shopify
   </Typography>
 );

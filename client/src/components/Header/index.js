@@ -5,7 +5,7 @@ import {
   IconButton,
   Drawer,
   Link,
-  Grid,
+  Typography,
   MenuItem,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -59,7 +59,13 @@ export default function Header() {
   const displayDesktop = () => {
     return (
       <Toolbar container xs={12} className={toolbar}>
-        {isAdmin ? "ADMIN" : Logo}
+        {isAdmin ? (
+          <Typography variant="h4" component="h4">
+            ADMIN
+          </Typography>
+        ) : (
+          Logo
+        )}
         <div>
           {desktopRoutes()}
           <ShoppingCart />
