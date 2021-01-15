@@ -72,7 +72,7 @@ function Login() {
       localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstLogin", true);
-      history.push("/");
+      window.location.href = "/";
     } catch (err) {
       setSubmitError(err.response.data.error);
     }

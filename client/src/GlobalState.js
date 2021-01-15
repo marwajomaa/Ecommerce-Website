@@ -8,6 +8,7 @@ export const GlobalState = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
+  const [callback, setCallback] = useState(false);
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -24,6 +25,7 @@ export const DataProvider = ({ children }) => {
     productsAPI: ProductsAPI(),
     userAPI: UserAPI(token),
     categoryAPI: CategoryAPI(token),
+    callback: [callback, setCallback],
   };
 
   return <GlobalState.Provider value={state}>{children}</GlobalState.Provider>;

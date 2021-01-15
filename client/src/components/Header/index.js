@@ -25,6 +25,7 @@ import { GlobalState } from "../../GlobalState";
 export default function Header() {
   const globalState = useContext(GlobalState);
   const [isLoggedIn] = globalState.token;
+  const [callback, setCallback] = globalState.callback;
   const [token] = globalState.userAPI.isLoggedIn;
   const [isAdmin] = globalState.userAPI.isAdmin;
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
