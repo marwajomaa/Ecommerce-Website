@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect, useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 import {
   adminRoutes,
@@ -21,6 +21,7 @@ import { Logo } from "../Logo";
 import { ShoppingCart } from "../ShoppingCart";
 import { useStyles } from "./Header.Style.js";
 import { GlobalState } from "../../GlobalState";
+import CommonBtn from "../Button";
 
 export default function Header() {
   const globalState = useContext(GlobalState);
@@ -28,6 +29,7 @@ export default function Header() {
   const [callback, setCallback] = globalState.callback;
   const [token] = globalState.userAPI.isLoggedIn;
   const [isAdmin] = globalState.userAPI.isAdmin;
+  const { logout } = globalState.userAPI;
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
 
   const [state, setState] = useState({
@@ -210,10 +212,24 @@ export default function Header() {
     );
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    logout();
+    window.location.href = "/";
+  };
+
   return (
     <header>
       <AppBar className={header}>
         {mobileView ? displayMobile() : displayDesktop()}
+        <CommonBtn
+          onClick={handleLogout}
+          color="secondary"
+          variant="outlined"
+          text="Logout"
+          size="medium"
+          style={{ height: "50px", alignSelf: "center" }}
+        />
       </AppBar>
     </header>
   );

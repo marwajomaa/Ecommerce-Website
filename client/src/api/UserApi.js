@@ -148,6 +148,14 @@ function UserApi() {
     alert("You have successfully placed an order");
   };
 
+  const logout = async () => {
+    try {
+      await axios.get("/api/users/logout");
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return {
     isLoggedIn: [isLoggedIn, setIsLoggedIn],
     isAdmin: [isAdmin, setIsAdmin],
@@ -159,6 +167,7 @@ function UserApi() {
     incrementQuantity,
     decrementQuantity,
     tranSuccess,
+    logout,
   };
 }
 

@@ -19,11 +19,6 @@ export const adminRoutes = [
     label: "History",
     href: "/history",
   },
-  {
-    label: "Log Out",
-    href: "/",
-    onClick: logoutUser,
-  },
 ];
 
 export const unLoggedRoutes = [
@@ -45,12 +40,5 @@ export const loggedRoutes = [
   {
     label: "History",
     href: "/history",
-  },
-  {
-    label: "Log Out",
-    href: "/",
-    onClick: () => {
-      localStorage.removeItem("token");
-    },
   },
 ];
