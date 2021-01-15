@@ -35,7 +35,7 @@ export default function Select(props) {
       <MuiSelect label={label} name={name} value={value} onChange={onChange}>
         {allProducts && <MenuItem value="">All Products</MenuItem>}
         {options.map((item) => (
-          <MenuItem key={item._id} value={item.name}>
+          <MenuItem key={item._id} value={item.value || item.name}>
             {item.name}
           </MenuItem>
         ))}
