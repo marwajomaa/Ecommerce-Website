@@ -34,7 +34,7 @@ exports.createPayment = async (req, res, next) => {
 
     await newPayment.save();
 
-    res.json({ status: "success", newPayment });
+    res.json(newPayment);
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }

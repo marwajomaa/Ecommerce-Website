@@ -5,6 +5,6 @@ const authAdmin = require("../middlewares/auth-admin");
 const { getPayment, createPayment } = require("../controllers/paymentCtrl");
 
 router.get("/", auth(), authAdmin(), getPayment);
-router.post("/", auth(), createPayment);
+router.post("/", auth(), authAdmin(), createPayment);
 
 module.exports = router;

@@ -13,26 +13,6 @@ function UserApi() {
   const [callback, setCallback] = useState(false);
 
   useEffect(() => {
-    const getHistory = async () => {
-      try {
-        if (isAdmin) {
-          await axios.get("/api/payments", {
-            headers: { Authorization: token },
-          });
-        } else {
-          const history = await axios.get("/api/users/history", {
-            headers: { Authorization: token },
-          });
-          setOrderHistory(history.data);
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-    getHistory();
-  }, [callback]);
-
-  useEffect(() => {
     const token = localStorage.getItem("token");
     // const res = localStorage.getItem("user");
     // const user = JSON.parse(res);
@@ -59,6 +39,30 @@ function UserApi() {
       getUser();
     }
   }, []);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        console.log(user.role, "ppppppppppp");
+        let history;
+
+        if (user.role === 1) {
+          history = await axios.get("/api/payments", {
+            headers: { Authorization: token },
+          });
+          await setOrderHistory(history.data);
+        } else {
+          history = await axios.get("/api/users/history", {
+            headers: { Authorization: token },
+          });
+          await setOrderHistory(history.data);
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    getHistory();
+  }, [callback, user, isAdmin]);
 
   const addToCart = async (product) => {
     if (!isLoggedIn) alert("Please login to continue buying");

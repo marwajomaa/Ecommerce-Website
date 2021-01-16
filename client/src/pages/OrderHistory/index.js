@@ -42,6 +42,7 @@ const StyledTableRow = withStyles((theme) => ({
 function OrderHistory() {
   const state = useContext(GlobalState);
   const [orderHistory] = state.userAPI.orderHistory;
+  const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
   console.log(orderHistory, "history");
 
   function createData(PaymentID, PurchasedAt, View) {
@@ -68,7 +69,7 @@ function OrderHistory() {
         component="h6"
         style={{ textAlign: "center", margin: "30px auto" }}
       >
-        You have <strong>{rows.length}</strong> orders
+        {isAdmin ? "Orders History" : `You have ${rows.length} orders`}
       </Typography>
       {rows.length !== 0 && (
         <TableContainer component={Paper}>
