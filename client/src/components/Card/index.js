@@ -72,6 +72,7 @@ export default function MediaCard({ product, handleCheck }) {
             />
             <Button
               color="secondary"
+              variant="outlined"
               style={{ width: "50%" }}
               text="Delete"
               onClick={() => deleteProduct(_id)}
@@ -80,7 +81,7 @@ export default function MediaCard({ product, handleCheck }) {
         ) : (
           <>
             <Button
-              color="secondary"
+              color="primary"
               style={{ width: "50%" }}
               text="Buy"
               href={isLoggedIn ? "#" : "/signup"}
