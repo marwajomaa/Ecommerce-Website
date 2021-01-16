@@ -57,7 +57,7 @@ function Filters() {
               onChange={(e) => setSearch(e.target.value.toLowerCase())}
             /> */}
           {/* </Grid> */}
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="p" component="span">
               Sort By:
             </Typography>

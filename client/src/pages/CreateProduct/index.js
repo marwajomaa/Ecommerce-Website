@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Paper, Grid, Typography, makeStyles } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import { GlobalState } from "../../GlobalState";
 import Input from "../../components/Input";
+import BackLink from "../../components/BackLink";
 import Button from "../../components/Button";
 import Select from "../../components/Select";
 import { useForm } from "../../hooks/useForm";
+import Loading from "../../components/Loading";
+import Alert from "../../components/Alert.js";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -38,6 +42,10 @@ function CreateProduct() {
   const [categories] = state.categoryAPI.categories;
   const { createProduct } = state.productsAPI;
   const [callback, setCallback] = state.productsAPI.callback;
+  const [alert] = state.userAPI.alert;
+  const [loading] = state.userAPI.loading;
+  const [success] = state.userAPI.success;
+  const [error] = state.userAPI.error;
   const { values, handleInputChange, clearInputs, setData } = useForm(
     initialValues,
     false
@@ -61,6 +69,11 @@ function CreateProduct() {
 
   return (
     <Paper elevation={0}>
+      {loading && <Loading />}
+      {alert && <Alert text={alert} type={success ? "success" : "error"} />}
+
+      {error && <Alert text={error} type="error" title="Error" />}
+      <BackLink />
       <form className={classes.container} onSubmit={handleSubmit}>
         <Typography variant="h6" component="p" className={classes.paragraph}>
           Create New Product

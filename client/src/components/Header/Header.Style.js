@@ -7,7 +7,7 @@ export const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
     backgroundColor: "#fff",
     paddingRight: "79px",
-    paddingLeft: "118px",
+    paddingLeft: "20px",
     color: "black",
     "@media (max-width: 900px)": {
       padding: 0,

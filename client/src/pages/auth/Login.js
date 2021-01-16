@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import axios from "axios";
+
+import { GlobalState } from "../../GlobalState";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useForm } from "../../hooks/useForm";
@@ -30,6 +31,9 @@ const initialValues = {
 
 function Login() {
   const history = useHistory();
+  const state = useContext(GlobalState);
+  const [user, setUser] = state.userAPI.user;
+  const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     if ("email" in fieldValues)
@@ -60,7 +64,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
     if (!validate()) {
       window.alert("form is not valid");
     }
@@ -68,11 +71,12 @@ function Login() {
 
     try {
       const res = await axios.post("/api/users/login", { ...values });
-      console.log(res.data.user, "user");
+      setUser(res.data.user);
+      if (res.data.user.role === 1) setIsAdmin(true);
       localStorage.setItem("user", res.data.user);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstLogin", true);
-      history.push("/");
+      window.location.href = "/";
     } catch (err) {
       setSubmitError(err.response.data.error);
     }

@@ -29,6 +29,7 @@ export default function MediaCard({ product, handleCheck }) {
   const [isLoggedIn] = globalState.token;
   const addToCart = globalState.userAPI.addToCart;
   const [isAdmin] = globalState.userAPI.isAdmin;
+  const [alert] = globalState.userAPI.alert;
   const { deleteProduct } = globalState.productsAPI;
   const { category, content, price, _id, checked } = product;
   const classes = useStyles();
@@ -72,6 +73,7 @@ export default function MediaCard({ product, handleCheck }) {
             />
             <Button
               color="secondary"
+              variant="outlined"
               style={{ width: "50%" }}
               text="Delete"
               onClick={() => deleteProduct(_id)}
@@ -80,7 +82,7 @@ export default function MediaCard({ product, handleCheck }) {
         ) : (
           <>
             <Button
-              color="secondary"
+              color="primary"
               style={{ width: "50%" }}
               text="Buy"
               href={isLoggedIn ? "#" : "/signup"}

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { TableCell, TableRow } from "@material-ui/core";
+
 import { GlobalState } from "../../GlobalState";
 import Loading from "../../components/Loading";
 import Table from "../../components/Table";
+import BackLink from "../../components/BackLink";
 
 function OrderDetails() {
   const params = useParams();
@@ -13,7 +14,6 @@ function OrderDetails() {
 
   useEffect(() => {
     if (params.id) {
-      console.log(params.id, "params");
       orderHistory.forEach((item) => {
         if (item._id === params.id) setOrderDetails([item]);
       });
@@ -58,6 +58,7 @@ function OrderDetails() {
   if (!orderDetails) return <Loading />;
   return (
     <>
+      <BackLink />
       <Table HeadData={paymentTable} rows={rows} addressDetails />
       {/* <Table HeadData={cartTable} cartRows={cartRows} cartDetails /> */}
     </>

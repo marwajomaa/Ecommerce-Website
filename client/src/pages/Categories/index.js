@@ -12,6 +12,8 @@ import { GlobalState } from "../../GlobalState";
 import { useForm } from "../../hooks/useForm";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import BackLink from "../../components/BackLink";
+import Alert from "../../components/Alert.js";
 
 const initialValues = {
   category: "",
@@ -50,6 +52,9 @@ function Categories() {
   const [categories] = state.categoryAPI.categories;
   const [callback, setCallback] = state.categoryAPI.callback;
   const [token] = state.token;
+  const [alert, setAlert] = state.userAPI.alert;
+  const [loading] = state.userAPI.loading;
+  const [success, setSuccess] = state.userAPI.success;
   // const { createCategory } = state.categoryAPI;
   const [category, setCategory] = useState("");
   const [onEdit, setOnEdit] = useState(false);
@@ -60,7 +65,6 @@ function Categories() {
     setCategory(name);
     setID(_id);
     setOnEdit(true);
-    setTimeout(() => console.log(onEdit), 4000);
   };
 
   const createCategory = async () => {
@@ -94,7 +98,8 @@ function Categories() {
   const deleteCategory = async (id) => {
     try {
       const res = await axios.delete(`/api/categories/category/${id}`);
-      alert(res.data.msg);
+      setAlert(res.data.msg);
+      setSuccess(true);
       setCallback(!callback);
     } catch (err) {
       alert(err.response.data.msg);
@@ -103,6 +108,8 @@ function Categories() {
 
   return (
     <Paper elevation={0}>
+      <BackLink />
+      {alert && <Alert text={alert} type={success ? "success" : "error"} />}
       <form onSubmit={createCategory} className={classes.container}>
         <Grid container xs={12} direction="column" spacing={2}>
           <Grid item xs={12}>

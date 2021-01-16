@@ -12,9 +12,9 @@ import {
   TableRow,
   Paper,
   Typography,
-  Grid,
 } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import BackLink from "../../components/BackLink";
 import { GlobalState } from "../../GlobalState";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -42,7 +42,7 @@ const StyledTableRow = withStyles((theme) => ({
 function OrderHistory() {
   const state = useContext(GlobalState);
   const [orderHistory] = state.userAPI.orderHistory;
-  console.log(orderHistory, "history");
+  const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
 
   function createData(PaymentID, PurchasedAt, View) {
     return { PaymentID, PurchasedAt, View };
@@ -63,12 +63,15 @@ function OrderHistory() {
 
   return (
     <Paper elevation={0}>
+      <BackLink />
       <Typography
         variant="h6"
         component="h6"
         style={{ textAlign: "center", margin: "30px auto" }}
       >
-        You have <strong>{rows.length}</strong> orders
+        {isAdmin
+          ? `Orders History: ${rows.length} orders`
+          : `You have ${rows.length} orders`}
       </Typography>
       {rows.length !== 0 && (
         <TableContainer component={Paper}>
