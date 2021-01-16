@@ -69,7 +69,9 @@ function OrderHistory() {
         component="h6"
         style={{ textAlign: "center", margin: "30px auto" }}
       >
-        {isAdmin ? "Orders History" : `You have ${rows.length} orders`}
+        {isAdmin
+          ? `Orders History: ${rows.length} orders`
+          : `You have ${rows.length} orders`}
       </Typography>
       {rows.length !== 0 && (
         <TableContainer component={Paper}>
