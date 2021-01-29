@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
-import img from "../../assets/img.jpg";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import headPhoneImg from "../../assets/headPhone.jpg";
+import labtopImg from "../../assets/img.jpg";
 
 const CategoryBox = styled("div")`
   box-shadow: 0 0 5px;
@@ -28,6 +29,17 @@ const CategoryBtn = styled("button")`
 `;
 
 function Category({ category }) {
+  const [img, setImage] = useState("");
+
+  useEffect(() => {
+    const setImg = () => {
+      if (category.name === "headphones") {
+        setImage(headPhoneImg);
+      } else if (category.name === "labtops") setImage(labtopImg);
+    };
+    setImg();
+  }, []);
+
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Link to={`/category/${category.name}`}>

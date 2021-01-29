@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
@@ -8,9 +8,10 @@ import {
   CardActionArea,
 } from "@material-ui/core";
 import CardMedia from "./CardMedia";
-import img from "../../assets/img.jpg";
 import Button from "../Button";
 import { GlobalState } from "../../GlobalState";
+import headPhoneImg from "../../assets/headPhone.jpg";
+import labtopImg from "../../assets/img.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +33,17 @@ export default function MediaCard({ product, handleCheck }) {
   const [alert] = globalState.userAPI.alert;
   const { deleteProduct } = globalState.productsAPI;
   const { category, content, price, _id, checked } = product;
+  const [img, setImage] = useState("");
   const classes = useStyles();
+
+  useEffect(() => {
+    const setImg = () => {
+      if (product.category === "headphones") {
+        setImage(headPhoneImg);
+      } else if (product.category === "labtops") setImage(labtopImg);
+    };
+    setImg();
+  }, []);
 
   return (
     <Card className={classes.root}>

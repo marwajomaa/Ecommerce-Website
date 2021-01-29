@@ -8,7 +8,10 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     flex: 2,
-    padding: "0 15px",
+    padding: "2rem 0",
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: "2rem",
   },
   line: {
     flex: 1,
@@ -17,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Title({ text, variant = "p", component = "p", ...props }) {
+function Title({ text, variant = "h6", component = "h6", ...props }) {
   const classes = useStyles();
   return (
     <Typography className={classes.root}>

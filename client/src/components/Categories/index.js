@@ -12,7 +12,6 @@ const useStyles = makeStyles(() => ({
   categoryContainer: {
     display: "flex",
     justifyContent: "space-around",
-    padding: "0 5px",
   },
 }));
 
@@ -22,12 +21,7 @@ function Categories() {
   const classes = useStyles();
   return (
     <Grid className={classes.root}>
-      <Title
-        text="Browser Our Categories"
-        variant="h6"
-        component="h6"
-        style={{ textAlign: "center", fontWeight: "700", fontSize: "2rem" }}
-      />
+      <Title text="Browser Our Categories" />
       <Grid container xs={12} className={classes.categoryContainer} spacing={3}>
         {categories.map((category) => {
           console.log(category);
