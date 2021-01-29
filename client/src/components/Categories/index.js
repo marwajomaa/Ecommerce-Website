@@ -1,0 +1,45 @@
+import React, { useContext } from "react";
+import { Grid, Typography, makeStyles, Box } from "@material-ui/core";
+import { GlobalState } from "../../GlobalState";
+import Title from "../Title";
+import Category from "./Category";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    padding: "3rem 0",
+    position: "relative",
+  },
+  categoryContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    padding: "0 5px",
+  },
+}));
+
+function Categories() {
+  const state = useContext(GlobalState);
+  const [categories] = state.categoryAPI.categories;
+  const classes = useStyles();
+  return (
+    <Grid className={classes.root}>
+      <Title
+        text="Browser Our Categories"
+        variant="h6"
+        component="h6"
+        style={{ textAlign: "center", fontWeight: "700", fontSize: "2rem" }}
+      />
+      <Grid container xs={12} className={classes.categoryContainer} spacing={3}>
+        {categories.map((category) => {
+          console.log(category);
+          return (
+            <>
+              <Category category={category} />
+            </>
+          );
+        })}
+      </Grid>
+    </Grid>
+  );
+}
+
+export default Categories;

@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import OrderHistory from "./OrderHistory";
 import OrderDetails from "./OrderHistory/OrderDetails";
 import Categories from "./Categories";
+import CategoryPage from "./CategoryPage";
 import CreateProduct from "./CreateProduct";
 import HomePage from "./HomePage";
 import NotFound from "./404Page";
@@ -23,7 +24,7 @@ function Pages({ style }) {
     <div className={style}>
       <Switch>
         <Route path="/" exact path="/" component={HomePage} />
-        <Route path="/" exact path="/products" component={Products} />
+        <Route exact path="/products" component={Products} />
         <Route
           path="/"
           exact
@@ -47,6 +48,7 @@ function Pages({ style }) {
           exact
           component={isAdmin ? Categories : NotFound}
         />
+        <Route path="/category/:name" exact component={CategoryPage} />
         <Route
           path="/create_product"
           exact

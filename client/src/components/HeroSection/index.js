@@ -30,6 +30,10 @@ const Container = styled("div")`
   color: white;
   font-size: 1.5rem;
   font-weight: bolder;
+  @media (max-width: 900px) {
+    font-size: 1rem;
+    font-weight: bold;
+  }
 `;
 
 const Typography = styled("h1")`

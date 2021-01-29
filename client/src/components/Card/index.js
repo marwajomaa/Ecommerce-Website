@@ -4,10 +4,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Typography,
   CardActionArea,
 } from "@material-ui/core";
+import CardMedia from "./CardMedia";
 import img from "../../assets/img.jpg";
 import Button from "../Button";
 import { GlobalState } from "../../GlobalState";
@@ -40,11 +40,7 @@ export default function MediaCard({ product, handleCheck }) {
         {isAdmin && (
           <Checkbox checked={checked} onChange={() => handleCheck(_id)} />
         )}
-        <CardMedia
-          className={classes.media}
-          image={img}
-          title="product image"
-        />
+        <CardMedia img={img} className={classes.media} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {category}
