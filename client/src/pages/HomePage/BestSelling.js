@@ -18,9 +18,6 @@ function BestSelling() {
         <Title text="BEST SELLING" />
         <Grid container xs={12}>
           {besSelling.map((product) => {
-            {
-              console.log(product);
-            }
             return <ImageBox product={product} img={img} />;
           })}
         </Grid>

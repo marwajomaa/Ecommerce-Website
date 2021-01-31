@@ -6,11 +6,14 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import headPhoneImg from "../../assets/headPhone.jpg";
 import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hats.jpg";
+import shoes from "../../assets/shoes.jpg";
 
 const CategoryBox = styled("div")`
   box-shadow: 0 0 5px;
   position: relative;
   overflow: hidden;
+  height: 300px;
 `;
 
 const CategoryBtn = styled("button")`
@@ -36,6 +39,8 @@ function Category({ category }) {
       if (category.name === "headphones") {
         setImage(headPhoneImg);
       } else if (category.name === "labtops") setImage(labtopImg);
+      else if (category.name === "hats") setImage(hatsImg);
+      else if (category.name === "shoes") setImage(shoes);
     };
     setImg();
   }, []);

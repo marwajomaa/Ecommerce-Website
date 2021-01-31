@@ -21,15 +21,10 @@ function Categories() {
   const classes = useStyles();
   return (
     <Grid className={classes.root}>
-      <Title text="Browser Our Categories" />
+      <Title text="BROWSE OUR CATEGORIES" />
       <Grid container xs={12} className={classes.categoryContainer} spacing={3}>
         {categories.map((category) => {
-          console.log(category);
-          return (
-            <>
-              <Category category={category} />
-            </>
-          );
+          return <Category category={category} />;
         })}
       </Grid>
     </Grid>

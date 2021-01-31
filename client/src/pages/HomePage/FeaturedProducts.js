@@ -49,7 +49,7 @@ function FeaturedProducts() {
 
   return (
     <section>
-      <Title text="Featured Products" />
+      <Title text="FEATURED PRODUCTS" />
 
       <Grid container xs={12}>
         <Grid
@@ -73,7 +73,15 @@ function FeaturedProducts() {
             onClick={() => showProducts("bestSelling")}
           />
         </Grid>
-        {featuredProducts}
+        <Grid
+          container
+          xs={12}
+          spacing={2}
+          style={{ display: "flex", justifyContent: "space-around" }}
+        >
+          {" "}
+          {featuredProducts}
+        </Grid>
       </Grid>
     </section>
   );

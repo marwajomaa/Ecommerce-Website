@@ -7,6 +7,8 @@ import Title from "../../components/Title";
 import Card from "../../components/Card";
 import headPhoneImg from "../../assets/headPhone.jpg";
 import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hat.jpg";
+import shoes from "../../assets/shoes2.jpg";
 
 function CategoryPage({ category }) {
   const params = useParams();
@@ -25,6 +27,8 @@ function CategoryPage({ category }) {
       if (params.name === "headphones") {
         setImage(headPhoneImg);
       } else if (params.name === "labtops") setImage(labtopImg);
+      else if (params.name === "hats") setImage(hatsImg);
+      else if (params.name === "shoes") setImage(shoes);
     };
     setImg();
   }, []);

@@ -12,6 +12,8 @@ import Button from "../Button";
 import { GlobalState } from "../../GlobalState";
 import headPhoneImg from "../../assets/headPhone.jpg";
 import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hat.jpg";
+import shoes from "../../assets/shoes.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -41,6 +43,8 @@ export default function MediaCard({ product, handleCheck }) {
       if (product.category === "headphones") {
         setImage(headPhoneImg);
       } else if (product.category === "labtops") setImage(labtopImg);
+      else if (product.category === "hats") setImage(hatsImg);
+      else if (product.category === "shoes") setImage(shoes);
     };
     setImg();
   }, []);
