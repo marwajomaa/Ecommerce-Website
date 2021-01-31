@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState, useContext, useLayoutEffect, useEffect } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { GlobalState } from "../GlobalState";
 import Products from "./Products";
 import ProductDetails from "./ProductDetails";
@@ -10,10 +10,18 @@ import Cart from "./Cart";
 import OrderHistory from "./OrderHistory";
 import OrderDetails from "./OrderHistory/OrderDetails";
 import Categories from "./Categories";
+import CategoryPage from "./CategoryPage";
 import CreateProduct from "./CreateProduct";
+import HomePage from "./HomePage";
 import NotFound from "./404Page";
 
 function Pages({ style }) {
+  const location = useLocation();
+  // Scroll to top if path changes
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const state = useContext(GlobalState);
   const [isLoggedIn] = state.userAPI.isLoggedIn;
   const [isAdmin] = state.userAPI.isAdmin;
@@ -21,7 +29,8 @@ function Pages({ style }) {
   return (
     <div className={style}>
       <Switch>
-        <Route path="/" exact path="/" component={Products} />
+        <Route path="/" exact path="/" component={HomePage} />
+        <Route exact path="/products" component={Products} />
         <Route
           path="/"
           exact
@@ -45,6 +54,7 @@ function Pages({ style }) {
           exact
           component={isAdmin ? Categories : NotFound}
         />
+        <Route path="/category/:name" exact component={CategoryPage} />
         <Route
           path="/create_product"
           exact

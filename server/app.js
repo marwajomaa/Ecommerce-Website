@@ -6,8 +6,16 @@ const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const router = require("./routes");
 const HttpError = require("./middlewares/http-error");
+const path = require("path");
 
 const app = express();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client", "build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
 //Middlewares
 if (process.env.NODE_ENV === "development") {

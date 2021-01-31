@@ -3,18 +3,16 @@ dotenv.config({ path: "./.env" });
 const mongoose = require("mongoose");
 const app = require("./app");
 
-const DB = process.env.DATABASE.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-);
-
 mongoose
   //  .connect(process.env.DATABASE_LOCAL, {
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  })
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hhgul.mongodb.net/${process.env.DB_NAME}?retryWrites=true`,
+    {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    }
+  )
   .then(() => console.log("DB connection successful🙂"))
   .catch((err) => console.log(err));
 

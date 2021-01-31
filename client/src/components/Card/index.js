@@ -1,16 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Typography,
   CardActionArea,
 } from "@material-ui/core";
-import img from "../../assets/img.jpg";
+import CardMedia from "./CardMedia";
 import Button from "../Button";
 import { GlobalState } from "../../GlobalState";
+import headPhoneImg from "../../assets/headPhone.jpg";
+import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hat.jpg";
+import shoes from "../../assets/shoes.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +35,19 @@ export default function MediaCard({ product, handleCheck }) {
   const [alert] = globalState.userAPI.alert;
   const { deleteProduct } = globalState.productsAPI;
   const { category, content, price, _id, checked } = product;
+  const [img, setImage] = useState("");
   const classes = useStyles();
+
+  useEffect(() => {
+    const setImg = () => {
+      if (product.category === "headphones") {
+        setImage(headPhoneImg);
+      } else if (product.category === "labtops") setImage(labtopImg);
+      else if (product.category === "hats") setImage(hatsImg);
+      else if (product.category === "shoes") setImage(shoes);
+    };
+    setImg();
+  }, []);
 
   return (
     <Card className={classes.root}>
@@ -40,11 +55,7 @@ export default function MediaCard({ product, handleCheck }) {
         {isAdmin && (
           <Checkbox checked={checked} onChange={() => handleCheck(_id)} />
         )}
-        <CardMedia
-          className={classes.media}
-          image={img}
-          title="product image"
-        />
+        <CardMedia img={img} className={classes.media} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {category}
@@ -73,7 +84,7 @@ export default function MediaCard({ product, handleCheck }) {
             />
             <Button
               color="secondary"
-              variant="outlined"
+              variant="contained"
               style={{ width: "50%" }}
               text="Delete"
               onClick={() => deleteProduct(_id)}
