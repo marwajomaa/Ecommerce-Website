@@ -5,10 +5,11 @@ import "./styles.css";
 
 const useStyles = makeStyles(() => ({
   img: {
-    height: "400px",
+    height: "220px",
     width: "100%",
     objectFit: "contain",
     display: "block",
+    padding: "10px 0",
     margin: "0 auto",
     "@media (max-width: 900px)": {
       height: "200px",
@@ -17,31 +18,37 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SliderImages = ({ images }) => {
+const defaultSettings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  autoplay: true,
+  speed: 1000,
+  autoplaySpeed: 1000,
+  cssEase: "linear",
+};
+
+const SliderImages = ({ images, settings = defaultSettings }) => {
   const classes = useStyles();
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 4000,
-    autoplaySpeed: 4000,
-    cssEase: "linear",
-  };
   return (
-    <div style={{ margin: "0 auto", padding: "0" }}>
-      <Slider {...settings}>
-        {images &&
-          images.map((img) => {
-            return (
-              <div style={{ width: "100%", height: "100%" }}>
-                <img src={img} alt={img} className={classes.img} />
-              </div>
-            );
-          })}
-      </Slider>
-    </div>
+    <Slider {...settings}>
+      {images &&
+        images.map((img) => {
+          return (
+            <div
+              style={{
+                width: "100%",
+                height: "80%",
+                textAlign: "center",
+                outlined: "none",
+              }}
+            >
+              <img src={img} alt={img} className={classes.img} />
+            </div>
+          );
+        })}
+    </Slider>
   );
 };
 

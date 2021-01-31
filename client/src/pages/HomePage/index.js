@@ -3,6 +3,7 @@ import HeroSection from "../../components/HeroSection";
 import Categories from "../../components/Categories";
 import BestSelling from "./BestSelling";
 import FeaturedProducts from "./FeaturedProducts";
+import SalesSlider from "./SalesSlider";
 
 function HomePage() {
   return (
@@ -11,6 +12,7 @@ function HomePage() {
       <Categories />
       <BestSelling />
       <FeaturedProducts />
+      <SalesSlider />
     </div>
   );
 }
