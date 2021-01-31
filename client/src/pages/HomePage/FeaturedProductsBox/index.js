@@ -1,15 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+
 import { GlobalState } from "../../../GlobalState";
 import Button from "../../../components/Button";
-import img from "../../../assets/img1.jpg";
+import Tooltip from "../../../components/ToolTip";
+import headPhoneImg from "../../../assets/headPhone.jpg";
+import labtopImg from "../../../assets/img.jpg";
+import hatsImg from "../../../assets/hat.jpg";
+import shoes from "../../../assets/shoes.jpg";
 import "./style.css";
 
 function FeaturedProductsBox({ product }) {
   const globalState = useContext(GlobalState);
   const [isLoggedIn] = globalState.token;
   const addToCart = globalState.userAPI.addToCart;
+
+  const [img, setImage] = useState("");
+
+  useEffect(() => {
+    const setImg = () => {
+      if (product.category === "headphones") {
+        setImage(headPhoneImg);
+      } else if (product.category === "labtops") setImage(labtopImg);
+      else if (product.category === "hats") setImage(hatsImg);
+      else if (product.category === "shoes") setImage(shoes);
+    };
+    setImg();
+  }, []);
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Link
@@ -30,6 +50,21 @@ function FeaturedProductsBox({ product }) {
                 color="secondary"
                 onClick={() => addToCart(product)}
               />
+            </div>
+            <div className="featured__icons">
+              <Link
+                to={`/product/detail/${product._id}`}
+                className="featured__link"
+              >
+                <Tooltip title="View">
+                  <VisibilityIcon style={{ color: "inherit" }} />
+                </Tooltip>
+              </Link>
+              <Link to="#" className="featured__link">
+                <Tooltip title="Add To wishlist">
+                  <FavoriteBorderIcon style={{ color: "inherit" }} />
+                </Tooltip>
+              </Link>
             </div>
           </div>
         </div>

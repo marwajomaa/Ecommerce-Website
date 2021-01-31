@@ -16,8 +16,6 @@ function CategoryPage({ category }) {
   const [products] = state.productsAPI.products;
   const [img, setImage] = useState("");
 
-  console.log(products, "----------");
-
   const relatedProducts = products.filter((product) => {
     return product.category === params.name;
   });
