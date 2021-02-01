@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
@@ -103,7 +104,7 @@ export default function MediaCard({ product, handleCheck }) {
             <Button
               style={{ width: "50%" }}
               text="View"
-              href={`/product/detail/${_id}`}
+              href={`/product/detail/${_id}/?cat=${category}`}
             />
           </>
         )}

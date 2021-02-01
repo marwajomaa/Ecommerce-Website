@@ -85,7 +85,7 @@ function Login() {
 
   const { container, Typography } = useStyles();
   return (
-    <>
+    <div style={{ marginTop: "-70px" }}>
       <div style={{ textAlign: "center" }}>{Logo}</div>
 
       <form onSubmit={handleSubmit}>
@@ -98,7 +98,7 @@ function Login() {
           className={container}
         >
           <Grid item xs={12} className={Typography}>
-            <Typography component="h1" variant="h1">
+            <Typography component="h2" variant="h2">
               Sign in
             </Typography>
           </Grid>
@@ -148,7 +148,7 @@ function Login() {
           </Grid>
         </Grid>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -80,7 +80,7 @@ function Signup() {
 
   const { container, Typography } = useStyles();
   return (
-    <>
+    <div style={{ marginTop: "-70px" }}>
       <div style={{ textAlign: "center" }}>{Logo}</div>
       <form onSubmit={handleSubmit}>
         <Grid
@@ -150,7 +150,7 @@ function Signup() {
           </Grid>
         </Grid>
       </form>
-    </>
+    </div>
   );
 }
 

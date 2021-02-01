@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Grid, Box, makeStyles, Typography } from "@material-ui/core";
 
 import { GlobalState } from "../../GlobalState";
 import BackLink from "../../components/BackLink";
-import Slider from "../../components/Slider";
-import img from "../../assets/img.jpg";
 import Button from "../../components/Button";
 import ProductItem from "../Products/ProductItem";
 import Loading from "../../components/Loading";
 import Alert from "../../components/Alert.js";
-import images from "../../constants/images";
 import Layout from "../../components/Layout";
+import headPhoneImg from "../../assets/headPhone.jpg";
+import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hat.jpg";
+import shoes from "../../assets/shoes.jpg";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,6 @@ const useStyle = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-around",
     flexWrap: "wrap",
-    // padding: "50px",
     fontSize: "15%",
   },
   image: {
@@ -50,10 +50,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function ProductDetails() {
+  const search = useLocation().search;
+  const category = new URLSearchParams(search).get("cat");
   const params = useParams();
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
-  const [productDetails, setProductDetails] = useState([]);
+  const [productDetails, setProductDetails] = useState({});
+  const [img, setImage] = useState("");
   const [isLoggedIn] = state.token;
   const [isAdmin] = state.userAPI.isAdmin;
   const { addToCart } = state.userAPI;
@@ -69,6 +72,18 @@ function ProductDetails() {
       });
     }
   }, [params.id, products]);
+
+  useEffect(() => {
+    const setImg = () => {
+      if (category === "headphones") {
+        setImage(headPhoneImg);
+      } else if (category === "labtops") setImage(labtopImg);
+      else if (category === "hats") setImage(hatsImg);
+      else if (category === "shoes") setImage(shoes);
+      else setImage(null);
+    };
+    setImg();
+  }, []);
 
   const { title, description, sold, content, price, _id } = productDetails;
   const classes = useStyle();
@@ -88,7 +103,6 @@ function ProductDetails() {
       {error && <Alert text={error} type="error" title="Error" />}
       <Grid container xs={12} className={classes.root}>
         <Grid xs={12} md={6}>
-          {/* <Slider images={images} /> */}
           <img src={img} alt={title} className={classes.image} />
         </Grid>
         <Box item className={classes.boxDetails}>
