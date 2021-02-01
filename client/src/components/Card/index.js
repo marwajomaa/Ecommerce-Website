@@ -45,6 +45,7 @@ export default function MediaCard({ product, handleCheck }) {
       } else if (product.category === "labtops") setImage(labtopImg);
       else if (product.category === "hats") setImage(hatsImg);
       else if (product.category === "shoes") setImage(shoes);
+      else setImage(null);
     };
     setImg();
   }, []);
@@ -93,9 +94,9 @@ export default function MediaCard({ product, handleCheck }) {
         ) : (
           <>
             <Button
-              color="primary"
+              color="secondary"
               style={{ width: "50%" }}
-              text="Buy"
+              text="Add To Cart"
               href={isLoggedIn ? "#" : "/signup"}
               onClick={() => addToCart(product)}
             />

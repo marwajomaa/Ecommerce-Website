@@ -137,8 +137,8 @@ function ProductDetails() {
           {!isAdmin && (
             <Button
               style={{ marginTop: "20px" }}
-              text={isLoggedIn && !isAdmin ? "Buy Now" : "Login to buy"}
-              color="primary"
+              text={!isAdmin && "Buy Now"}
+              color="secondary"
               href={isLoggedIn ? "#" : "/signup"}
               onClick={() => addToCart(productDetails)}
             />

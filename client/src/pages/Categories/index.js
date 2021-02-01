@@ -124,7 +124,7 @@ function Categories() {
             <Button
               text={onEdit ? "Update" : "Add Category"}
               type="outlined"
-              color="primary"
+              color="secondary"
               style={{ alignSelf: "center", width: "100%" }}
             />
           </Grid>
