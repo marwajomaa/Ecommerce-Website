@@ -11,6 +11,7 @@ import ProductItem from "../Products/ProductItem";
 import Loading from "../../components/Loading";
 import Alert from "../../components/Alert.js";
 import images from "../../constants/images";
+import Layout from "../../components/Layout";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -74,7 +75,7 @@ function ProductDetails() {
   if (productDetails.length === 0) return <Loading />;
 
   return (
-    <>
+    <Layout>
       <BackLink />
       {loading && <Loading />}
       {alert && isLoggedIn && (
@@ -159,7 +160,7 @@ function ProductDetails() {
           })}
         </Grid>
       </Grid>
-    </>
+    </Layout>
   );
 }
 

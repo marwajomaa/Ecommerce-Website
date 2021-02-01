@@ -18,6 +18,7 @@ import headPhoneImg from "../../assets/headPhone.jpg";
 import labtopImg from "../../assets/img.jpg";
 import hatsImg from "../../assets/hat.jpg";
 import shoesImg from "../../assets/shoes.jpg";
+import Layout from "../../components/Layout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,7 +126,7 @@ function Cart() {
   }
 
   return (
-    <>
+    <Layout>
       <Paper elevation={0}>
         <BackLink />
         {cart.map((p) => {
@@ -191,7 +192,7 @@ function Cart() {
           <PaypalButton total={total} tranSuccess={tranSuccess} />
         </Grid>
       )}
-    </>
+    </Layout>
   );
 }
 

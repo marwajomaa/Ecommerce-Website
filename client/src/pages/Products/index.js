@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import Alert from "../../components/Alert.js";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import Layout from "../../components/Layout";
 
 function Products() {
   const history = useHistory();
@@ -56,42 +57,44 @@ function Products() {
   };
 
   return (
-    <Grid container spacing={5}>
-      {loading && <Loading />}
-      {alert && isLoggedIn && (
-        <Alert text={alert} type={success ? "success" : "error"} />
-      )}
-      {alert && !isLoggedIn && (
-        <Alert text="Please login to continue buying" type="error" />
-      )}
-      {error && <Alert text={error} type="error" title="Error" />}
-      {products.length !== 0 && isAdmin && (
-        <Grid item xs={12}>
-          <Typography variant="p" component="span">
-            Check All
-          </Typography>
-          <Checkbox checked={isCheck} onChange={checkAll} />
-          <Button
-            text="Delete All"
-            variant="outlined"
-            color="secondary"
-            onClick={DeleteAll}
-          />
+    <Layout>
+      <Grid container spacing={5}>
+        {loading && <Loading />}
+        {alert && isLoggedIn && (
+          <Alert text={alert} type={success ? "success" : "error"} />
+        )}
+        {alert && !isLoggedIn && (
+          <Alert text="Please login to continue buying" type="error" />
+        )}
+        {error && <Alert text={error} type="error" title="Error" />}
+        {products.length !== 0 && isAdmin && (
+          <Grid item xs={12}>
+            <Typography variant="p" component="span">
+              Check All
+            </Typography>
+            <Checkbox checked={isCheck} onChange={checkAll} />
+            <Button
+              text="Delete All"
+              variant="outlined"
+              color="secondary"
+              onClick={DeleteAll}
+            />
+          </Grid>
+        )}
+        <Grid container spacing={3} xs={12}>
+          {products &&
+            products.map((product) => {
+              return (
+                <ProductItem
+                  key={product._id}
+                  product={product}
+                  handleCheck={handleCheck}
+                />
+              );
+            })}
         </Grid>
-      )}
-      <Grid container spacing={3} xs={12}>
-        {products &&
-          products.map((product) => {
-            return (
-              <ProductItem
-                key={product._id}
-                product={product}
-                handleCheck={handleCheck}
-              />
-            );
-          })}
       </Grid>
-    </Grid>
+    </Layout>
   );
 }
 

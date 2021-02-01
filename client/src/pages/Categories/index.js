@@ -14,6 +14,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import BackLink from "../../components/BackLink";
 import Alert from "../../components/Alert.js";
+import Layout from "../../components/Layout";
 
 const initialValues = {
   category: "",
@@ -107,65 +108,67 @@ function Categories() {
   };
 
   return (
-    <Paper elevation={0}>
-      <BackLink />
-      {alert && <Alert text={alert} type={success ? "success" : "error"} />}
-      <form onSubmit={createCategory} className={classes.container}>
-        <Grid container xs={12} direction="column" spacing={2}>
-          <Grid item xs={12}>
-            <Input
-              label="Add New Category"
-              name="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              text={onEdit ? "Update" : "Add Category"}
-              type="outlined"
-              color="secondary"
-              style={{ alignSelf: "center", width: "100%" }}
-            />
-          </Grid>
-        </Grid>
-      </form>
-      <Box style={{ textAlign: "center", margin: "2rem auto" }}>
-        <Typography variant="h4">Categories</Typography>
-        {categories &&
-          categories.map(({ name, _id }) => (
-            <Grid className={classes.box}>
-              <Typography
-                key={name}
-                variant="h5"
-                component="span"
-                className={classes.typography}
-              >
-                {name}
-              </Typography>
-              <ButtonGroup style={{ margin: "1rem auto" }}>
-                <Button
-                  text="Edit"
-                  variant="contained"
-                  style={{
-                    alignSelf: "center",
-                    width: "100%",
-                    margin: "0 1rem",
-                  }}
-                  onClick={() => onEditCategory(_id, name)}
-                />
-                <Button
-                  text="Delete"
-                  type="outlined"
-                  color="secondary"
-                  style={{ alignSelf: "center", width: "100%" }}
-                  onClick={() => deleteCategory(_id)}
-                />
-              </ButtonGroup>
+    <Layout>
+      <Paper elevation={0}>
+        <BackLink />
+        {alert && <Alert text={alert} type={success ? "success" : "error"} />}
+        <form onSubmit={createCategory} className={classes.container}>
+          <Grid container xs={12} direction="column" spacing={2}>
+            <Grid item xs={12}>
+              <Input
+                label="Add New Category"
+                name="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              />
             </Grid>
-          ))}
-      </Box>
-    </Paper>
+            <Grid item xs={12}>
+              <Button
+                text={onEdit ? "Update" : "Add Category"}
+                type="outlined"
+                color="secondary"
+                style={{ alignSelf: "center", width: "100%" }}
+              />
+            </Grid>
+          </Grid>
+        </form>
+        <Box style={{ textAlign: "center", margin: "2rem auto" }}>
+          <Typography variant="h4">Categories</Typography>
+          {categories &&
+            categories.map(({ name, _id }) => (
+              <Grid className={classes.box}>
+                <Typography
+                  key={name}
+                  variant="h5"
+                  component="span"
+                  className={classes.typography}
+                >
+                  {name}
+                </Typography>
+                <ButtonGroup style={{ margin: "1rem auto" }}>
+                  <Button
+                    text="Edit"
+                    variant="contained"
+                    style={{
+                      alignSelf: "center",
+                      width: "100%",
+                      margin: "0 1rem",
+                    }}
+                    onClick={() => onEditCategory(_id, name)}
+                  />
+                  <Button
+                    text="Delete"
+                    type="outlined"
+                    color="secondary"
+                    style={{ alignSelf: "center", width: "100%" }}
+                    onClick={() => deleteCategory(_id)}
+                  />
+                </ButtonGroup>
+              </Grid>
+            ))}
+        </Box>
+      </Paper>
+    </Layout>
   );
 }
 

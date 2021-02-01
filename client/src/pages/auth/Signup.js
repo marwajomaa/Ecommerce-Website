@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Logo } from "../../components/Logo";
 import axios from "axios";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -80,74 +80,77 @@ function Signup() {
 
   const { container, Typography } = useStyles();
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid
-        container
-        spacing={0}
-        justify="center"
-        direction="row"
-        xs={12}
-        className={container}
-      >
-        <Grid item xs={12} className={Typography}>
-          <Typography component="h1" variant="h1">
-            Sign Up and Start Shopping!
-          </Typography>
+    <>
+      <div style={{ textAlign: "center" }}>{Logo}</div>
+      <form onSubmit={handleSubmit}>
+        <Grid
+          container
+          spacing={0}
+          justify="center"
+          direction="row"
+          xs={12}
+          className={container}
+        >
+          <Grid item xs={12} className={Typography}>
+            <Typography component="h1" variant="h1">
+              Sign Up and Start Shopping!
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <form>
+              <Grid container direction="column" spacing={2}>
+                <Grid item xs={12}>
+                  <Input
+                    label="Name"
+                    name="name"
+                    value={values.name}
+                    onChange={handleInputChange}
+                    error={errors.name}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Input
+                    label="Email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleInputChange}
+                    error={errors.email}
+                  />
+                </Grid>
+                <Grid item xs={12} ms={12}>
+                  <Input
+                    label="Password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleInputChange}
+                    error={errors.password}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    style={{ width: "100%" }}
+                    color="secondary"
+                    type="submit"
+                    text="Register"
+                  />
+                </Grid>
+                {submitError && (
+                  <Typography
+                    style={{
+                      color: "red",
+                      padding: "10px 0",
+                      textAlign: "center",
+                    }}
+                  >
+                    {submitError}
+                  </Typography>
+                )}
+              </Grid>
+            </form>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <form>
-            <Grid container direction="column" spacing={2}>
-              <Grid item xs={12}>
-                <Input
-                  label="Name"
-                  name="name"
-                  value={values.name}
-                  onChange={handleInputChange}
-                  error={errors.name}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Input
-                  label="Email"
-                  name="email"
-                  value={values.email}
-                  onChange={handleInputChange}
-                  error={errors.email}
-                />
-              </Grid>
-              <Grid item xs={12} ms={12}>
-                <Input
-                  label="Password"
-                  name="password"
-                  value={values.password}
-                  onChange={handleInputChange}
-                  error={errors.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  style={{ width: "100%" }}
-                  color="secondary"
-                  type="submit"
-                  text="Register"
-                />
-              </Grid>
-              {submitError && (
-                <Typography
-                  style={{
-                    color: "red",
-                    padding: "10px 0",
-                    textAlign: "center",
-                  }}
-                >
-                  {submitError}
-                </Typography>
-              )}
-            </Grid>
-          </form>
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </>
   );
 }
 

@@ -24,7 +24,6 @@ function App() {
       <Router>
         <CssBaseline />
         <Paper elevation={0} className={classes.root}>
-          <Header />
           <Pages style={classes.main} />
         </Paper>
       </Router>
