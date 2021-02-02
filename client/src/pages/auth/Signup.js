@@ -80,7 +80,7 @@ function Signup() {
 
   const { container, Typography } = useStyles();
   return (
-    <div style={{ marginTop: "-70px" }}>
+    <div style={{ marginTop: "-80px" }}>
       <div style={{ textAlign: "center" }}>
         <Logo />
       </div>

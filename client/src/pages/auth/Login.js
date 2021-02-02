@@ -85,7 +85,7 @@ function Login() {
 
   const { container, Typography } = useStyles();
   return (
-    <div style={{ marginTop: "-70px" }}>
+    <div style={{ marginTop: "-80px" }}>
       <div style={{ textAlign: "center" }}>
         <Logo />
       </div>
@@ -99,11 +99,7 @@ function Login() {
           xs={12}
           className={container}
         >
-          <Grid item xs={12} className={Typography}>
-            <Typography component="h2" variant="h2">
-              Sign in
-            </Typography>
-          </Grid>
+          <Grid item xs={12} className={Typography}></Grid>
           <Grid item xs={12}>
             <Grid container direction="column" spacing={2}>
               <Grid item xs={12}>
