@@ -9,6 +9,7 @@ import headPhoneImg from "../../assets/headPhone.jpg";
 import labtopImg from "../../assets/img.jpg";
 import hatsImg from "../../assets/hat.jpg";
 import shoes from "../../assets/shoes2.jpg";
+import Layout from "../../components/Layout";
 
 function CategoryPage({ category }) {
   const params = useParams();
@@ -32,19 +33,21 @@ function CategoryPage({ category }) {
   }, []);
 
   return (
-    <Grid container xs={12}>
-      <Grid style={{ width: "100%", height: "400px" }}>
-        <img src={img} style={{ width: "100%", height: "100%" }} />
-      </Grid>
-      <Grid item xs={12}>
-        <Title text={`${params.name.toUpperCase()} PRODUCTS`} />
-      </Grid>
+    <Layout>
       <Grid container xs={12}>
-        {relatedProducts.map((product) => {
-          return <Card product={product} />;
-        })}
+        <Grid style={{ width: "100%", height: "400px" }}>
+          <img src={img} style={{ width: "100%", height: "100%" }} />
+        </Grid>
+        <Grid item xs={12}>
+          <Title text={`${params.name.toUpperCase()} PRODUCTS`} />
+        </Grid>
+        <Grid container xs={12}>
+          {relatedProducts.map((product) => {
+            return <Card product={product} />;
+          })}
+        </Grid>
       </Grid>
-    </Grid>
+    </Layout>
   );
 }
 

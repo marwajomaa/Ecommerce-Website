@@ -45,7 +45,7 @@ function FeaturedProductsBox({ product }) {
           <div className="featured__overlay">
             <div className="featured__text">
               <Button
-                text="Add to Cart"
+                text="Buy Now"
                 href={isLoggedIn ? "#" : "/signup"}
                 color="secondary"
                 onClick={() => addToCart(product)}

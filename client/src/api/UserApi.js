@@ -17,6 +17,17 @@ function UserApi() {
   const [loading, setLoading] = useState(false);
   const [orderHistory, setOrderHistory] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [mobileView, setMobile] = useState(false);
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900 ? setMobile(true) : setMobile(false);
+    };
+
+    setResponsiveness();
+
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -101,7 +112,7 @@ function UserApi() {
     }
   };
 
-  const cartUpdate = async (cart) => {
+  const cartUpdate = async () => {
     try {
       await axios.patch(
         "/api/users/cart",
@@ -157,6 +168,7 @@ function UserApi() {
 
   const tranSuccess = async (payment) => {
     const { paymentID, address } = payment;
+    console.log(cart, paymentID, address, "pppppppppp");
     setLoading(true);
     await axios.post(
       "/api/payments",
@@ -165,7 +177,7 @@ function UserApi() {
     );
     setLoading(false);
     setCart([]);
-    await cartUpdate([]);
+    await cartUpdate();
     setCallback(!callback);
     setAlert("You have successfully placed an order");
     setSuccess(true);
@@ -182,6 +194,7 @@ function UserApi() {
   };
 
   return {
+    isMobile: [mobileView, setMobile],
     isLoggedIn: [isLoggedIn, setIsLoggedIn],
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],

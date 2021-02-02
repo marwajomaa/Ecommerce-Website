@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import Alert from "../../components/Alert.js";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import Layout from "../../components/Layout";
 
 function Products() {
   const history = useHistory();
@@ -23,14 +24,6 @@ function Products() {
   const [error] = state.userAPI.error;
   const { deleteProduct } = state.productsAPI;
   const [isCheck, setIsCheck] = useState(false);
-
-  if (!products) return <Loading />;
-  if (products.length === 0)
-    return (
-      <Typography variant="h4" component="h4" style={{ textAlign: "center" }}>
-        No Products
-      </Typography>
-    );
 
   const handleCheck = (id) => {
     products.forEach((product) => {
@@ -55,43 +48,55 @@ function Products() {
     setIsCheck(false);
   };
 
+  if (!products) return <Loading />;
   return (
-    <Grid container spacing={5}>
-      {loading && <Loading />}
-      {alert && isLoggedIn && (
-        <Alert text={alert} type={success ? "success" : "error"} />
-      )}
-      {alert && !isLoggedIn && (
-        <Alert text="Please login to continue buying" type="error" />
-      )}
-      {error && <Alert text={error} type="error" title="Error" />}
-      {products.length !== 0 && isAdmin && (
-        <Grid item xs={12}>
-          <Typography variant="p" component="span">
-            Check All
+    <Layout>
+      <Grid container spacing={5}>
+        {products.length === 0 && (
+          <Typography
+            variant="h4"
+            component="h4"
+            style={{ textAlign: "center" }}
+          >
+            No Products
           </Typography>
-          <Checkbox checked={isCheck} onChange={checkAll} />
-          <Button
-            text="Delete All"
-            variant="outlined"
-            color="secondary"
-            onClick={DeleteAll}
-          />
+        )}
+        {loading && <Loading />}
+        {alert && isLoggedIn && (
+          <Alert text={alert} type={success ? "success" : "error"} />
+        )}
+        {alert && !isLoggedIn && (
+          <Alert text="Please login to continue buying" type="error" />
+        )}
+        {error && <Alert text={error} type="error" title="Error" />}
+        {products.length !== 0 && isAdmin && (
+          <Grid item xs={12}>
+            <Typography variant="p" component="span">
+              Check All
+            </Typography>
+            <Checkbox checked={isCheck} onChange={checkAll} />
+            <Button
+              text="Delete All"
+              variant="outlined"
+              color="secondary"
+              onClick={DeleteAll}
+            />
+          </Grid>
+        )}
+        <Grid container spacing={3} xs={12}>
+          {products &&
+            products.map((product) => {
+              return (
+                <ProductItem
+                  key={product._id}
+                  product={product}
+                  handleCheck={handleCheck}
+                />
+              );
+            })}
         </Grid>
-      )}
-      <Grid container spacing={3} xs={12}>
-        {products &&
-          products.map((product) => {
-            return (
-              <ProductItem
-                key={product._id}
-                product={product}
-                handleCheck={handleCheck}
-              />
-            );
-          })}
       </Grid>
-    </Grid>
+    </Layout>
   );
 }
 

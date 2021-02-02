@@ -6,12 +6,12 @@ import Category from "./Category";
 
 const useStyles = makeStyles(() => ({
   root: {
-    padding: "3rem 0",
     position: "relative",
   },
   categoryContainer: {
     display: "flex",
     justifyContent: "space-around",
+    margin: "0 auto",
   },
 }));
 

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { makeStyles, Checkbox } from "@material-ui/core";
 import {
   Card,
@@ -45,6 +46,7 @@ export default function MediaCard({ product, handleCheck }) {
       } else if (product.category === "labtops") setImage(labtopImg);
       else if (product.category === "hats") setImage(hatsImg);
       else if (product.category === "shoes") setImage(shoes);
+      else setImage(null);
     };
     setImg();
   }, []);
@@ -93,7 +95,7 @@ export default function MediaCard({ product, handleCheck }) {
         ) : (
           <>
             <Button
-              color="primary"
+              color="secondary"
               style={{ width: "50%" }}
               text="Buy"
               href={isLoggedIn ? "#" : "/signup"}
@@ -102,7 +104,7 @@ export default function MediaCard({ product, handleCheck }) {
             <Button
               style={{ width: "50%" }}
               text="View"
-              href={`/product/detail/${_id}`}
+              href={`/product/detail/${_id}/?cat=${category}`}
             />
           </>
         )}

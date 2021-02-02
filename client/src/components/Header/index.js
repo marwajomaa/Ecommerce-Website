@@ -17,7 +17,7 @@ import {
   loggedRoutes,
   unLoggedRoutes,
 } from "../../constants/Links";
-import { Logo } from "../Logo";
+import Logo from "../Logo";
 import { ShoppingCart } from "../ShoppingCart";
 import { useStyles } from "./Header.Style.js";
 import { GlobalState } from "../../GlobalState";
@@ -28,33 +28,21 @@ export default function Header() {
   const [isLoggedIn] = globalState.token;
   const [callback, setCallback] = globalState.callback;
   const [token] = globalState.userAPI.isLoggedIn;
+  const [mobileView] = globalState.userAPI.isMobile;
   const [isAdmin] = globalState.userAPI.isAdmin;
   const { logout } = globalState.userAPI;
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
 
   const [state, setState] = useState({
-    mobileView: false,
     drawerOpen: false,
   });
 
-  const { mobileView, drawerOpen } = state;
+  const { drawerOpen } = state;
 
   useEffect(() => {
     mobileRoutes();
     desktopRoutes();
   }, [isLoggedIn, token, isAdmin]);
-
-  useEffect(() => {
-    const setResponsiveness = () => {
-      return window.innerWidth < 900
-        ? setState((prevState) => ({ ...prevState, mobileView: true }))
-        : setState((prevState) => ({ ...prevState, mobileView: false }));
-    };
-
-    setResponsiveness();
-
-    window.addEventListener("resize", () => setResponsiveness());
-  }, []);
 
   const displayDesktop = () => {
     return (
@@ -64,49 +52,36 @@ export default function Header() {
             ADMIN
           </Typography>
         ) : (
-          Logo
+          <Logo />
         )}
         <div>{desktopRoutes()}</div>
       </Toolbar>
     );
   };
 
-  const mobileRoutes = () => {
-    if (isLoggedIn) {
-      if (isAdmin) {
-        return adminRoutes.map(({ label, href }) => {
-          return (
-            <Link
-              {...{
-                component: RouterLink,
-                to: href,
-                color: "inherit",
-                style: { textDecoration: "none" },
-                key: label,
-              }}
-            >
-              <MenuItem>{label}</MenuItem>
-            </Link>
-          );
-        });
-      }
-      return loggedRoutes.map(({ label, href }) => {
-        return (
-          <Link
-            {...{
-              component: RouterLink,
-              to: href,
-              color: "inherit",
-              style: { textDecoration: "none" },
-              key: label,
-            }}
-          >
-            <MenuItem>{label}</MenuItem>
-          </Link>
-        );
-      });
-    }
-    return unLoggedRoutes.map(({ label, href }) => {
+  const handleLogout = () => {
+    localStorage.clear();
+    logout();
+    window.location.href = "/";
+  };
+
+  const addMobileLink = (label, href) => {
+    if (label === "Logout") {
+      return (
+        <Link
+          onClick={handleLogout}
+          {...{
+            component: RouterLink,
+            to: href,
+            color: "inherit",
+            style: { textDecoration: "none" },
+            key: label,
+          }}
+        >
+          <MenuItem>{label}</MenuItem>
+        </Link>
+      );
+    } else {
       return (
         <Link
           {...{
@@ -120,6 +95,52 @@ export default function Header() {
           <MenuItem>{label}</MenuItem>
         </Link>
       );
+    }
+  };
+
+  const addDesktopLink = (label, href) => {
+    if (label === "Logout") {
+      return (
+        <CommonBtn
+          onClick={handleLogout}
+          color="secondary"
+          variant="outlined"
+          text="Logout"
+          size="medium"
+          style={{ height: "50px", alignSelf: "center" }}
+        />
+      );
+    } else {
+      return (
+        <Button
+          {...{
+            key: label,
+            color: "inherit",
+            to: href,
+            component: RouterLink,
+            className: menuButton,
+          }}
+        >
+          {label}
+        </Button>
+      );
+    }
+  };
+
+  const mobileRoutes = () => {
+    console.log(isAdmin, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if (isLoggedIn) {
+      if (isAdmin) {
+        return adminRoutes.map(({ label, href }) => {
+          return addMobileLink(label, href);
+        });
+      }
+      return loggedRoutes.map(({ label, href }) => {
+        return addMobileLink(label, href);
+      });
+    }
+    return unLoggedRoutes.map(({ label, href }) => {
+      return addMobileLink(label, href);
     });
   };
 
@@ -127,35 +148,11 @@ export default function Header() {
     if (isLoggedIn) {
       if (isAdmin) {
         return adminRoutes.map(({ label, href }) => {
-          return (
-            <Button
-              {...{
-                key: label,
-                color: "inherit",
-                to: href,
-                component: RouterLink,
-                className: menuButton,
-              }}
-            >
-              {label}
-            </Button>
-          );
+          return addDesktopLink(label, href);
         });
       }
       return loggedRoutes.map(({ label, href }) => {
-        return (
-          <Button
-            {...{
-              key: label,
-              color: "inherit",
-              to: href,
-              component: RouterLink,
-              className: menuButton,
-            }}
-          >
-            {label}
-          </Button>
-        );
+        return addDesktopLink(label, href);
       });
     }
     return unLoggedRoutes.map(({ label, href }) => {
@@ -206,41 +203,16 @@ export default function Header() {
             <div className={drawerContainer}>{mobileRoutes()}</div>
           </Drawer>
 
-          {isAdmin ? "ADMIN" : Logo}
+          {isAdmin ? <h1>ADMIN</h1> : <Logo />}
         </Toolbar>
       </>
     );
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    logout();
-    window.location.href = "/";
   };
 
   return (
     <header>
       <AppBar className={header}>
         {mobileView ? displayMobile() : displayDesktop()}
-        {isLoggedIn ? (
-          <CommonBtn
-            onClick={handleLogout}
-            color="secondary"
-            variant="outlined"
-            text="Logout"
-            size="medium"
-            style={{ height: "50px", alignSelf: "center" }}
-          />
-        ) : (
-          <CommonBtn
-            color="primary"
-            variant="outlined"
-            text="Login"
-            size="medium"
-            href="/login"
-            style={{ height: "50px", alignSelf: "center" }}
-          />
-        )}
         <ShoppingCart />
       </AppBar>
     </header>

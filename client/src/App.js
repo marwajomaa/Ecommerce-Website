@@ -7,14 +7,11 @@ import Pages from "./pages";
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    width: "95%",
+    padding: "1rem .5rem",
     margin: "0 auto",
-    marginBottom: "20px",
   },
   main: {
-    padding: "10px",
-    margin: "0 auto",
-    marginTop: "130px",
+    marginTop: "125px",
     minHeight: "100vh",
     width: "100%",
   },
@@ -27,7 +24,6 @@ function App() {
       <Router>
         <CssBaseline />
         <Paper elevation={0} className={classes.root}>
-          <Header />
           <Pages style={classes.main} />
         </Paper>
       </Router>
