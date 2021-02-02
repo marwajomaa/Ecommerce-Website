@@ -129,7 +129,7 @@ function CreateProduct() {
             <Grid item xs={12}>
               <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 text="Submit"
                 type="submit"
                 style={{ width: "100%" }}

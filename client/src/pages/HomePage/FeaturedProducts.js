@@ -58,7 +58,10 @@ function FeaturedProducts() {
         <Grid
           item
           xs={12}
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Button
             text="All"
@@ -79,8 +82,12 @@ function FeaturedProducts() {
         <Grid
           container
           xs={12}
-          spacing={2}
-          style={{ display: "flex", justifyContent: "space-around" }}
+          spacing={1}
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            margin: "0 auto",
+          }}
         >
           {" "}
           {featuredProducts}

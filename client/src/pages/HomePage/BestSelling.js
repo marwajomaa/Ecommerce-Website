@@ -12,16 +12,18 @@ function BestSelling() {
   const besSelling = products.sort((a, b) => b.sold - a.sold).slice(0, 3);
 
   return (
-    <Grid container xs={12}>
-      <Grid item xs={12}>
-        <Title text="BEST SELLING" />
-        <Grid container xs={12} spacing={2}>
-          {besSelling.map((product) => {
-            return <ImageBox product={product} />;
-          })}
+    <section>
+      <Grid container xs={12}>
+        <Grid item xs={12}>
+          <Title text="BEST SELLING" />
+          <Grid container xs={12} spacing={2} style={{ margin: "0 auto" }}>
+            {besSelling.map((product) => {
+              return <ImageBox product={product} />;
+            })}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </section>
   );
 }
 

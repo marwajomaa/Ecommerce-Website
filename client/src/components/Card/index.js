@@ -97,7 +97,7 @@ export default function MediaCard({ product, handleCheck }) {
             <Button
               color="secondary"
               style={{ width: "50%" }}
-              text="Add To Cart"
+              text="Buy"
               href={isLoggedIn ? "#" : "/signup"}
               onClick={() => addToCart(product)}
             />

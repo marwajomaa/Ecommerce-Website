@@ -7,7 +7,7 @@ import Pages from "./pages";
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    padding: "1rem",
+    padding: "1rem .5rem",
     margin: "0 auto",
   },
   main: {

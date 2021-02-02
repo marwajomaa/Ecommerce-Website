@@ -7,7 +7,7 @@ import Layout from "../../components/Layout";
 
 function HomePage() {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", margin: "0 auto" }}>
       <Layout>
         <HeroSection />
         <Categories />
