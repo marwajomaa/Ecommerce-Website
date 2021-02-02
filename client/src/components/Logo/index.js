@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Typography, makeStyles } from "@material-ui/core";
-import img from "../../assets/logo.png";
+import logo from "../../assets/logo.png";
+import mobileLogo from "../../assets/images/mobile-logo.png";
+import { GlobalState } from "../../GlobalState";
 
-export const Logo = (
-  <>
-    <Link to="/">
-      <img src={img} alt="logo" />
-    </Link>
-  </>
-);
+const Logo = () => {
+  const globalState = useContext(GlobalState);
+
+  const [mobileView] = globalState.userAPI.isMobile;
+  console.log(mobileView, "-----------------------------");
+  return (
+    <>
+      <Link to="/">
+        <img src={mobileView ? mobileLogo : logo} alt="logo" />
+      </Link>
+    </>
+  );
+};
+
+export default Logo;

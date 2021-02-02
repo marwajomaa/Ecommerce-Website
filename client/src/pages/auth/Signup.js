@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, makeStyles } from "@material-ui/core";
-import { Logo } from "../../components/Logo";
+import Logo from "../../components/Logo";
 import axios from "axios";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -81,7 +81,9 @@ function Signup() {
   const { container, Typography } = useStyles();
   return (
     <div style={{ marginTop: "-70px" }}>
-      <div style={{ textAlign: "center" }}>{Logo}</div>
+      <div style={{ textAlign: "center" }}>
+        <Logo />
+      </div>
       <form onSubmit={handleSubmit}>
         <Grid
           container

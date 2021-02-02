@@ -14,6 +14,9 @@ const useStyles = makeStyles(() => ({
     "&:hover": {
       background: "black",
     },
+    "&:active": {
+      background: "black",
+    },
   },
 }));
 

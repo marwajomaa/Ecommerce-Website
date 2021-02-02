@@ -17,6 +17,17 @@ function UserApi() {
   const [loading, setLoading] = useState(false);
   const [orderHistory, setOrderHistory] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [mobileView, setMobile] = useState(false);
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900 ? setMobile(true) : setMobile(false);
+    };
+
+    setResponsiveness();
+
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -183,6 +194,7 @@ function UserApi() {
   };
 
   return {
+    isMobile: [mobileView, setMobile],
     isLoggedIn: [isLoggedIn, setIsLoggedIn],
     isAdmin: [isAdmin, setIsAdmin],
     user: [user, setUser],
