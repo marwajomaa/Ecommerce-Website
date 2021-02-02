@@ -1,20 +1,21 @@
-import { Typography, makeStyles } from "@material-ui/core";
-import React from "react";
-import img from "../../assets/logo.png";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import mobileLogo from "../../assets/images/mobile-logo.png";
+import { GlobalState } from "../../GlobalState";
 
-const useStyles = makeStyles(() => ({
-  logo: {
-    fontFamily: "Work Sans, sans-serif",
-    fontWeight: 500,
-    color: "red",
-    textAlign: "left",
-  },
-}));
+const Logo = () => {
+  const globalState = useContext(GlobalState);
 
-const { logo } = useStyles;
+  const [mobileView] = globalState.userAPI.isMobile;
+  console.log(mobileView, "-----------------------------");
+  return (
+    <>
+      <Link to="/">
+        <img src={mobileView ? mobileLogo : logo} alt="logo" />
+      </Link>
+    </>
+  );
+};
 
-export const Logo = (
-  <div>
-    <img src={img} alt="logo" />
-  </div>
-);
+export default Logo;

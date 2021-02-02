@@ -1,7 +1,3 @@
-const logoutUser = () => {
-  localStorage.removeItem("token");
-};
-
 export const adminRoutes = [
   {
     label: "products",
@@ -19,6 +15,10 @@ export const adminRoutes = [
     label: "History",
     href: "/history",
   },
+  {
+    label: "Logout",
+    href: "#",
+  },
 ];
 
 export const unLoggedRoutes = [
@@ -29,6 +29,10 @@ export const unLoggedRoutes = [
   {
     label: "Products",
     href: "/Products",
+  },
+  {
+    label: "Login",
+    href: "/login",
   },
 ];
 
@@ -44,5 +48,9 @@ export const loggedRoutes = [
   {
     label: "History",
     href: "/history",
+  },
+  {
+    label: "Logout",
+    href: "#",
   },
 ];

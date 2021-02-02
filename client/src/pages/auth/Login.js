@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, makeStyles } from "@material-ui/core";
+import Logo from "../../components/Logo";
 import axios from "axios";
 
 import { GlobalState } from "../../GlobalState";
@@ -84,66 +85,68 @@ function Login() {
 
   const { container, Typography } = useStyles();
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid
-        container
-        spacing={0}
-        justify="center"
-        direction="row"
-        xs={12}
-        className={container}
-      >
-        <Grid item xs={12} className={Typography}>
-          <Typography component="h1" variant="h1">
-            Sign in
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="column" spacing={2}>
-            <Grid item xs={12}>
-              <Input
-                label="Email"
-                name="email"
-                value={values.email}
-                onChange={handleInputChange}
-                error={errors.email}
-              />
+    <div style={{ marginTop: "-80px" }}>
+      <div style={{ textAlign: "center" }}>
+        <Logo />
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <Grid
+          container
+          spacing={0}
+          justify="center"
+          direction="row"
+          xs={12}
+          className={container}
+        >
+          <Grid item xs={12} className={Typography}></Grid>
+          <Grid item xs={12}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item xs={12}>
+                <Input
+                  label="Email"
+                  name="email"
+                  value={values.email}
+                  onChange={handleInputChange}
+                  error={errors.email}
+                />
+              </Grid>
+              <Grid item xs={12} ms={12}>
+                <Input
+                  label="Password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleInputChange}
+                  error={errors.password}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  style={{ width: "100%" }}
+                  color="secondary"
+                  type="submit"
+                  text="Login"
+                />
+              </Grid>
+              {submitError && (
+                <Typography
+                  style={{
+                    color: "red",
+                    padding: "10px 0",
+                    textAlign: "center",
+                  }}
+                >
+                  {submitError}
+                </Typography>
+              )}
             </Grid>
-            <Grid item xs={12} ms={12}>
-              <Input
-                label="Password"
-                name="password"
-                value={values.password}
-                onChange={handleInputChange}
-                error={errors.password}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                style={{ width: "100%" }}
-                color="secondary"
-                type="submit"
-                text="Login"
-              />
-            </Grid>
-            {submitError && (
-              <Typography
-                style={{
-                  color: "red",
-                  padding: "10px 0",
-                  textAlign: "center",
-                }}
-              >
-                {submitError}
-              </Typography>
-            )}
+          </Grid>
+          <Grid item>
+            <Button text="Register" type="outlined" href="/signup" />
           </Grid>
         </Grid>
-        <Grid item>
-          <Button text="Register" type="outlined" href="/signup" />
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </div>
   );
 }
 

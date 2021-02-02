@@ -14,6 +14,11 @@ import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import PaypalButton from "./PaypalButton";
 import BackLink from "../../components/BackLink";
+import headPhoneImg from "../../assets/headPhone.jpg";
+import labtopImg from "../../assets/img.jpg";
+import hatsImg from "../../assets/hat.jpg";
+import shoesImg from "../../assets/shoes.jpg";
+import Layout from "../../components/Layout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Img = ({ src }) => {
+  return (
+    <img src={src} alt="img" style={{ width: "300px", height: "300px" }} />
+  );
+};
+
 function Cart() {
   const globalState = useContext(GlobalState);
   const [cart, setCart] = globalState.userAPI.cart;
@@ -76,7 +87,23 @@ function Cart() {
     tranSuccess,
   } = globalState.userAPI;
   const [total, setTotal] = useState(0);
+  const [img, setImage] = useState("");
   const classes = useStyles();
+
+  const setImg = (category) => {
+    switch (category) {
+      case "headphones":
+        return <Img src={headPhoneImg} />;
+      case "labtops":
+        return <Img src={labtopImg} />;
+      case "hats":
+        return <Img src={hatsImg} />;
+      case "shoes":
+        return <Img src={shoesImg} />;
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     if (cart) {
@@ -99,18 +126,14 @@ function Cart() {
   }
 
   return (
-    <>
+    <Layout>
       <Paper elevation={0}>
         <BackLink />
         {cart.map((p) => {
           return (
             <Grid container xs={12} spacing={3} className={classes.root}>
               <Grid item xs={12} sm={6}>
-                <img
-                  src={img}
-                  alt="img"
-                  style={{ width: "100%", height: "100%" }}
-                />
+                {setImg(p.category)}
               </Grid>
               <Grid item xs={12} sm={6} className={classes.boxDetails}>
                 <Typography
@@ -169,7 +192,7 @@ function Cart() {
           <PaypalButton total={total} tranSuccess={tranSuccess} />
         </Grid>
       )}
-    </>
+    </Layout>
   );
 }
 

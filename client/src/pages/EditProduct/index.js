@@ -8,6 +8,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import Select from "../../components/Select";
+import Layout from "../../components/Layout";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -82,75 +83,77 @@ function EditProduct() {
     return <Loading />;
   }
   return (
-    <Paper elevation={0}>
-      <BackLink />
-      <form className={classes.container} onSubmit={handleSubmit}>
-        <Typography variant="h6" component="p" className={classes.paragraph}>
-          Edit Product
-        </Typography>
-        <Grid container direction="column" spacing={2}>
-          <Grid item xs={12}>
-            <Input
-              id="Title"
-              label="Title"
-              initialValue={product.title}
-              type="text"
-              name="title"
-              value={product.title}
-              onChange={handleInputChange}
-            />
+    <Layout>
+      <Paper elevation={0}>
+        <BackLink />
+        <form className={classes.container} onSubmit={handleSubmit}>
+          <Typography variant="h6" component="p" className={classes.paragraph}>
+            Edit Product
+          </Typography>
+          <Grid container direction="column" spacing={2}>
+            <Grid item xs={12}>
+              <Input
+                id="Title"
+                label="Title"
+                initialValue={product.title}
+                type="text"
+                name="title"
+                value={product.title}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                id="Price"
+                label="Price"
+                type="number"
+                name="price"
+                value={product.price}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                id="Description"
+                label="Description"
+                type="text"
+                name="description"
+                value={product.description}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                id="Content"
+                label="Content"
+                type="text"
+                name="content"
+                value={product.content}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Select
+                name="category"
+                label="Category"
+                value={product.category}
+                onChange={handleInputChange}
+                options={categories && categories}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="secondary"
+                text="Submit"
+                type="submit"
+                style={{ width: "100%" }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Input
-              id="Price"
-              label="Price"
-              type="number"
-              name="price"
-              value={product.price}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Input
-              id="Description"
-              label="Description"
-              type="text"
-              name="description"
-              value={product.description}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Input
-              id="Content"
-              label="Content"
-              type="text"
-              name="content"
-              value={product.content}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Select
-              name="category"
-              label="Category"
-              value={product.category}
-              onChange={handleInputChange}
-              options={categories && categories}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              text="Submit"
-              type="submit"
-              style={{ width: "100%" }}
-            />
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </Layout>
   );
 }
 
